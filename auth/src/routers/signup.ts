@@ -1,46 +1,32 @@
 import { NextFunction, Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
 
 import { UserSignUp } from '@src/interfaces';
 import { MongoService } from '@src/database';
-import { ErrorEx } from '@src/helper';
-
-const opt: jwt.SignOptions = {
-  algorithm: 'HS256',
-  expiresIn: '1d',
-};
+import { JwtService, ErrorEx } from '@src/helper';
 
 export const SignUp = async (req: Request<unknown, unknown, UserSignUp>, res: Response, next: NextFunction) => {
   try {
-    const salt = process.env.JWT_SALT;
-    if (!salt) throw new ErrorEx('Forbidden', null, 403);
-
     const DB = new MongoService().user;
-
+    const JWT = new JwtService();
     const { email, password } = req.body;
+
     const exist = await DB.findOne({ email }).exec();
     if (exist) throw new ErrorEx('User exist', null, 400);
 
     const user = await DB.addition({ email, password });
 
-    const accessToken = jwt.sign(
+    const accessToken = await JWT.accessToken(
       {
         email: user.email,
-        id: user._id,
-        iat: Math.floor(Date.now() / 1000),
+        id: user.id,
       },
-      salt,
-      opt,
+      req,
     );
-
-    req.session = {
-      jwt: { accessToken },
-    };
 
     res.status(201).send({
       data: {
         email: user.email,
-        id: user._id,
+        id: user.id,
         accessToken,
       },
     });

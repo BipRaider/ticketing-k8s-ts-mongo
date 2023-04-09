@@ -10,7 +10,11 @@ const router: Router = express.Router();
 
 const validateUser = [
   body('email').isEmail().withMessage('Email must be valid'),
-  body('password').trim().isLength({ min: 4, max: 20 }).withMessage('Password must be between 4 and 20 symbols.'),
+  body('password')
+    .notEmpty()
+    .trim()
+    .isLength({ min: 4, max: 20 })
+    .withMessage('Password must be between 4 and 20 symbols.'),
 ];
 
 router.get('/currentuser', CurrentUser);

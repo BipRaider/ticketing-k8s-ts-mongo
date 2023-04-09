@@ -11,6 +11,13 @@ const UserSchema = new Schema<IUserSchema, IUserModel>(
   },
   {
     timestamps: { createdAt: 'createAt', updatedAt: 'updateAt' },
+    toJSON: {
+      transform: (_doc, ret) => {
+        ret.id = ret._id;
+        delete ret._id;
+      },
+      versionKey: false,
+    },
   },
 );
 
