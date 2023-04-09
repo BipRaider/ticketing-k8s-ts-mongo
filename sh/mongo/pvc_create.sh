@@ -1,0 +1,1 @@
+kubectl create -f ./infra/k8s/pvc mongodb-pvc.yaml

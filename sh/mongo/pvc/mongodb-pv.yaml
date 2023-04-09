@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mongo-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /data/mongo
+# PersistentVolumes (PV): are objects which map to a storage location.
+# It’s a piece of storage in the cluster that has been provisioned by an administrator.

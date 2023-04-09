@@ -1,0 +1,63 @@
+{
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "preserveConstEnums": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": false,
+    "exactOptionalPropertyTypes": false,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noEmitOnError": true,
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "ES6",
+    "skipLibCheck": true,
+    "alwaysStrict": true,
+    "checkJs": true,
+    "outDir": "dist",
+    "strictNullChecks": false,
+    "strictFunctionTypes": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": false,
+    // "declaration": true,
+    // "declarationMap": true,
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "incremental": true,
+    "allowUnreachableCode": true,
+    "allowUnusedLabels": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "pretty": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "lib": [
+      "ES6",
+      "ES7"
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "@src/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "./src/**/*"
+  ],
+  "ts-node": {
+    "files": true
+  },
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ],
+}

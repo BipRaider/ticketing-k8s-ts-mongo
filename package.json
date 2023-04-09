@@ -1,0 +1,20 @@
+{
+  "name": "ticketing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "skaffold dev",
+    "up": "docker-compose up -d",
+    "nginx": "bash ./sh/k8s/nginx.sh",
+    "k:check": "bash ./sh/k8s/check.sh",
+    "k:apply": "bash ./sh/k8s/apply.sh",
+    "k:restart": "bash ./sh/k8s/restart.sh",
+    "k:delete": "bash ./sh/k8s/delete.sh",
+    "d:clear": "bash ./sh/docker/clear.sh",
+    "d:build": "bash ./sh/docker/build.sh",
+    "kompose": "wsl kompose --file docker-compose.yml convert"
+  },
+  "author": "",
+  "license": "ISC"
+}
