@@ -1,11 +1,13 @@
 import { Request, Response } from 'express';
 
-export const CurrentUser = (req: Request, res: Response) => {
-  const { body } = req;
+import { MongoService } from '@src/database';
 
-  console.log('Body CurrentUser:', body);
+export const CurrentUser = async (req: Request, res: Response) => {
+  const DB = new MongoService().user;
+
+  const user = await DB.findById(req.user.id).select({ password: 0 }).exec();
 
   res.status(201).send({
-    text: 'CurrentUser',
+    data: user,
   });
 };

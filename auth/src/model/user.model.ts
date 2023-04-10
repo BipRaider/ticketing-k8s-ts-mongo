@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 
 import { DB_Module } from '@src/database';
 import { IUserAttr, IUserModel, IUserSchema, TUserInstance } from '@src/interfaces';
-import { Password } from '@src/helper';
+import { PasswordService } from '@src/helper';
 
 const UserSchema = new Schema<IUserSchema, IUserModel>(
   {
@@ -29,7 +29,7 @@ UserSchema.statics['addition'] = async function (date: IUserAttr): Promise<TUser
 
 UserSchema.pre('save', async function (done) {
   if (this.isModified('password')) {
-    const hashed = await Password.toHash(this.get('password'));
+    const hashed = await PasswordService.toHash(this.get('password'));
     this.set('password', hashed);
   }
   done();

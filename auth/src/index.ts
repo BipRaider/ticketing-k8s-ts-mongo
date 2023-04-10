@@ -8,8 +8,11 @@ import { MongoService } from './database';
 import { ErrorEx } from './helper';
 
 const cookieSessionOptions: CookieSessionInterfaces.CookieSessionOptions = {
+  name: 'session',
+  keys: ['secretKeys'],
   signed: false,
-  secure: true,
+  secure: true, //if https request
+  maxAge: 24 * 60 * 60 * 1000, // 24 hours
 };
 
 const start = async () => {

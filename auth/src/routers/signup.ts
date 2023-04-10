@@ -15,13 +15,7 @@ export const SignUp = async (req: Request<unknown, unknown, UserSignUp>, res: Re
 
     const user = await DB.addition({ email, password });
 
-    const accessToken = await JWT.accessToken(
-      {
-        email: user.email,
-        id: user.id,
-      },
-      req,
-    );
+    const accessToken = await JWT.accessToken({ email: user.email, id: user.id }, req);
 
     res.status(201).send({
       data: {

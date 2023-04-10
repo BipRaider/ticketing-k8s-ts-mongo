@@ -23,10 +23,17 @@ export class JwtService {
       this.#accessOpt,
     );
 
-    req.session = {
-      jwt: { accessToken },
-    };
+    req.session = { jwt: { accessToken } };
 
     return accessToken;
+  };
+
+  public valid = async (token: string): Promise<string | jwt.JwtPayload | null> => {
+    return await new Promise((res): void => {
+      jwt.verify(token, this.#salt, (err, decoded): void => {
+        if (decoded) res(decoded);
+        if (err) res(null);
+      });
+    });
   };
 }

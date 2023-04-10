@@ -14,8 +14,10 @@ export class ErrorEx extends Error {
   /** Serialize error method.*/
   public send = (res: Response) => {
     return res.status(this.statusCode).send({
-      message: this.message,
-      data: this.payload,
+      error: {
+        message: this.message,
+        data: this.payload,
+      },
     });
   };
 }

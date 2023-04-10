@@ -1,17 +1,17 @@
 declare namespace Express {
-  //TODO:
-  interface Request {
-    session?: {
-      jwt: {
-        accessToken?: string;
-        refreshToken?: string;
-      };
-    };
-  }
-  interface Session {
+  interface Session extends CookieSessionInterfaces.CookieSessionObject {
     jwt: {
       accessToken?: string;
       refreshToken?: string;
+    };
+  }
+
+  interface Request {
+    session: Session | null;
+    sessionOptions: CookieSessionInterfaces.CookieSessionOptions;
+    user?: {
+      id: string;
+      email: string;
     };
   }
 }

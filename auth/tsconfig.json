@@ -9,7 +9,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
+    "noPropertyAccessFromIndexSignature": false, // session["jwt"]
     "noEmitOnError": true,
     "module": "commonjs",
     "esModuleInterop": true,
@@ -22,9 +22,9 @@
     "strictFunctionTypes": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "sourceMap": false,
-    // "declaration": true,
-    // "declarationMap": true,
+    "sourceMap": false, //*.map.js
+    "declarationMap": true, // *.d.ts
+    "declaration": true, // *.d.ts
     "removeComments": true,
     "allowSyntheticDefaultImports": true,
     "incremental": true,
@@ -47,7 +47,10 @@
       "@src/*": [
         "./src/*"
       ]
-    }
+    },
+    "types": [
+      "./src/interfaces/http.d.ts",
+    ]
   },
   "include": [
     "**/*.ts",
