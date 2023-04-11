@@ -6,7 +6,7 @@ export class JwtService {
   readonly #accessOpt: jwt.SignOptions;
 
   constructor() {
-    this.#salt = process.env['JWT_SALT'];
+    this.#salt = process.env['JWT_SALT'] || 'jwt';
     this.#accessOpt = {
       algorithm: 'HS256',
       expiresIn: process.env['JWT_ACCESS_EXP'] || '1d',

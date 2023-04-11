@@ -40,7 +40,7 @@
     "moduleResolution": "node",
     "lib": [
       "ES6",
-      "ES7"
+      "ES7",
     ],
     "baseUrl": "./",
     "paths": {
@@ -49,7 +49,7 @@
       ]
     },
     "types": [
-      "./src/interfaces/http.d.ts",
+      "./src/interfaces/http.d.ts"
     ]
   },
   "include": [

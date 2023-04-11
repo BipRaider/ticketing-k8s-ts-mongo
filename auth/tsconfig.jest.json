@@ -1,0 +1,44 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "target": "es6",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowSyntheticDefaultImports": true,
+    "importHelpers": true,
+    "strict": true,
+    "pretty": true,
+    "moduleResolution": "node",
+    "allowJs": true,
+    "noImplicitReturns": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "lib": [
+      "ES6",
+      "ES7",
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "@src/*": [
+        "./src/*"
+      ]
+    },
+    "types": [
+      "./src/interfaces/http.d.ts"
+    ]
+  },
+  "include": [
+    "**/*.ts",
+    "./src/**/*"
+  ],
+  "ts-node": {
+    "files": true
+  },
+  "exclude": [
+    "node_modules"
+  ],
+}

@@ -14,7 +14,8 @@ export const SignIn = async (req: Request<unknown, unknown, UserSignIn>, res: Re
     const user = await DB.findOne({ email }).exec();
 
     if (!user) throw new ErrorEx('User is not exist', null, 400);
-    if (!PasswordService.compare(user.password, password)) throw new ErrorEx('Invalid credentials', null, 401);
+    const passCheck = await PasswordService.compare(user.password, password);
+    if (!passCheck) throw new ErrorEx('Invalid credentials', null, 401);
 
     const accessToken = await JWT.accessToken({ email: user.email, id: user.id }, req);
 
