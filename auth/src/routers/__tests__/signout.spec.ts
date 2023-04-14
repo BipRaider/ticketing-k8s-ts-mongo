@@ -1,6 +1,6 @@
 import { describe, test, expect } from '@jest/globals';
 
-import { query } from '../../test/server';
+import { query } from '../../test/utils/server';
 
 const validateResponse201 = (res: any, email: string) => {
   const { statusCode, body } = res;

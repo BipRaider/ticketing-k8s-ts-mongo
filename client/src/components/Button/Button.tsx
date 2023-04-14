@@ -1,0 +1,35 @@
+import React from 'react';
+import cn from 'classnames';
+
+import ArrowIcon from './arrow.svg';
+import styles from './Button.module.scss';
+import { ButtonProps } from './Button.props';
+
+export const Button: React.FC<ButtonProps> = ({
+  appearance,
+  arrow = 'none',
+  children,
+  className,
+  ...props
+}: ButtonProps): JSX.Element => {
+  return (
+    <button
+      className={cn(styles.button, className, {
+        [styles.primary]: appearance === 'primary',
+        [styles.ghost]: appearance === 'ghost',
+      })}
+      {...props}
+    >
+      {children}
+      {arrow !== 'none' && (
+        <span
+          className={cn(styles.arrow, {
+            [styles.down]: arrow === 'down',
+          })}
+        >
+          <ArrowIcon />
+        </span>
+      )}
+    </button>
+  );
+};

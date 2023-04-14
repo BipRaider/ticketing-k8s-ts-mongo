@@ -1,0 +1,11 @@
+@use '../../styles/styles' as *;
+
+.card {
+  background: $white;
+  border-radius: 15px;
+  box-shadow: 0 4px 4px rgb(0 0 0 / 19.9%);
+}
+
+.blue {
+  background: #f9f8ff;
+}

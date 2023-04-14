@@ -1,0 +1,43 @@
+@use '../../styles/styles' as *;
+
+.firstLevelList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+
+  list-style: none;
+
+  li {
+    align-self: center;
+    justify-self: center;
+  }
+}
+
+.firstLevel {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  align-items: center;
+  align-self: center;
+  justify-self: center;
+
+  font-weight: 500;
+
+  font-size: 18px;
+  line-height: 25px;
+
+  &:hover {
+    color: $primary;
+  }
+}
+
+.firstLevelActive {
+  color: $primary;
+}
+
+.firstLevelActive svg,
+.firstLevel:hover svg {
+  fill: $primary;
+}

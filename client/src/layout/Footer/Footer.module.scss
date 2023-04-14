@@ -1,0 +1,27 @@
+@use '../../styles/styles' as *;
+
+.footer {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px 40px;
+  padding: 25px 30px;
+
+  color: $wite;
+  font-size: 16px;
+  line-height: 1.2;
+
+  background-color: $primary;
+
+  a:hover {
+    color: $gray-light;
+    text-shadow: 1px 2px 1px $black;
+
+    transition: all $transition-time;
+  }
+}
+
+@media (max-width: 765px) {
+  .footer {
+    grid-template-columns: 1fr;
+  }
+}

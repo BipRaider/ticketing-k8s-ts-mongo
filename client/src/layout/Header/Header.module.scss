@@ -1,0 +1,19 @@
+@use '../../styles/styles' as *;
+
+.header {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 10px;
+
+  width: 100%;
+
+  margin: 15px 15px 0;
+
+  background-color: beige;
+
+  border: 1px solid darkblue;
+
+  span {
+    color: black;
+  }
+}

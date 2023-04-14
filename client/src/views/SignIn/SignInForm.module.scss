@@ -1,0 +1,44 @@
+@use '../../styles/styles' as *;
+
+.bodyForm {
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-rows: repeat(3, 50px);
+  grid-template-columns: [start] 300px [end];
+  gap: 20px 30px;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+
+  font-size: 14px;
+  line-height: 24px;
+
+  background-color: gainsboro;
+
+  .email {
+    grid-column: start / end;
+  }
+
+  .password {
+    grid-column: start / end;
+  }
+
+  .submit {
+    grid-column: start / end;
+  }
+}
+
+.success {
+  color: forestgreen;
+}
+
+.error {
+  color: red;
+}
+
+@media screen and (width <= 1100px) {
+  .submit {
+    align-items: center;
+  }
+}

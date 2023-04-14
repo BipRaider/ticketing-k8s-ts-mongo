@@ -17,9 +17,6 @@ spec:
                 name: auth-srv
                 port:
                   number: 8001
-    - host: posts.com
-      http:
-        paths:
           - path: /?(.*)
             pathType: Prefix
             backend:

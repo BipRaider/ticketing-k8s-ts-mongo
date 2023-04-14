@@ -21,9 +21,3 @@ export class ErrorEx extends Error {
     });
   };
 }
-
-export class DataBaseConnectionError extends ErrorEx {
-  constructor(override payload: unknown[] = null) {
-    super('Error connection to database.', payload, 500);
-  }
-}

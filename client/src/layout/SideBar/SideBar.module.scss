@@ -1,0 +1,17 @@
+@use '../../styles/styles' as *;
+
+.sidebar {
+  display: grid;
+  grid-template-areas: 'logo . . menu';
+  grid-template-columns: 50px auto auto minmax(320px, 1200px);
+  gap: 10px;
+  align-content: start;
+}
+
+.menu {
+  grid-area: menu;
+}
+
+.logo {
+  grid-area: logo;
+}

@@ -1,0 +1,87 @@
+@use '../../styles/styles' as *;
+
+.button {
+  display: inline-block;
+
+  padding: 10px;
+
+  font-size: 14px;
+  text-align: center;
+
+  border: none;
+  border-radius: 5px;
+
+  cursor: pointer;
+
+  transition: all 0.2s;
+}
+
+.primary {
+  color: $white;
+
+  background-color: $primary;
+
+  &:hover,
+  &:focus {
+    background-color: $primary-hover;
+  }
+}
+
+.ghost {
+  color: $black;
+
+  background: none;
+  border: 1px solid $gray-light;
+
+  &:hover,
+  &:focus {
+    color: $white;
+
+    background-color: $primary;
+  }
+}
+
+.arrow {
+  display: inline-block;
+
+  margin-left: 10px;
+}
+
+.down {
+  transform: rotate(90deg);
+
+  transition: all $transition-time ease-out;
+}
+
+.primary svg,
+.ghost:hover svg {
+  fill: $white;
+}
+
+@media (prefers-color-scheme: dark) {
+  .primary {
+    color: $white;
+  }
+
+  .ghost {
+    color: $black;
+
+    &:hover {
+      color: $white;
+    }
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .primary {
+    color: $white;
+  }
+
+  .ghost {
+    color: $black;
+
+    &:hover {
+      color: $white;
+    }
+  }
+}

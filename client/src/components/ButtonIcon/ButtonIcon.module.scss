@@ -1,0 +1,44 @@
+@use '../../styles/styles' as *;
+
+.button {
+  width: 40px;
+  height: 40px;
+
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px $scroll-up-bx;
+
+  cursor: pointer;
+}
+
+.primary {
+  background-color: $primary;
+
+  &:hover,
+  &:focus {
+    background-color: $primary-hover;
+    transform: scale(1.03);
+  }
+}
+
+.primary svg * {
+  fill: $white;
+}
+
+.white {
+  background-color: $white;
+
+  &:hover,
+  &:focus {
+    background-color: $primary;
+    transform: scale(1.03);
+  }
+}
+
+.white svg * {
+  fill: $primary;
+}
+
+.white:hover svg * {
+  fill: $white;
+}

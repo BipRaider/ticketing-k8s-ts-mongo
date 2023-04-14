@@ -1,0 +1,45 @@
+@use '../styles/styles' as *;
+
+.wrapper {
+  display: grid;
+  grid-template-areas:
+    'header header header header'
+    '. main main .'
+    'footer footer footer footer';
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: auto 230px minmax(320px, 1200px) auto;
+
+  width: 100%;
+  min-height: 100vh;
+}
+
+.header {
+  grid-area: header;
+}
+
+.main {
+  grid-area: main;
+}
+
+.footer {
+  grid-area: footer;
+}
+
+.skipLink {
+  position: fixed;
+  top: 0;
+  left: 100px;
+
+  display: block;
+
+  height: 0;
+  overflow: hidden;
+
+  color: $white;
+
+  background: $primary;
+}
+
+.displayed {
+  height: auto;
+}

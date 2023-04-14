@@ -1,0 +1,38 @@
+@use '../../styles/styles' as *;
+
+.input {
+  padding: 7px 15px;
+
+  color: $black;
+
+  font-size: 16px;
+
+  font-family: $font-primary;
+  line-height: 22px;
+
+  background: $white;
+  border: none;
+  border-radius: 5px;
+  outline-color: $primary;
+  box-shadow: 0 4px 4px rgb(0 0 0 / 5%);
+}
+
+.input::placeholder {
+  color: $gray;
+}
+
+.error {
+  border: 1px solid $red;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.errorMessage {
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+
+  color: $red;
+}

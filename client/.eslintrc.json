@@ -1,0 +1,185 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true,
+    "jest": true
+  },
+  "extends": [
+    "next",
+    "next/core-web-vitals",
+    "plugin:@next/next/recommended",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "prettier",
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "tsconfigRootDir": "./",
+    "project": "./tsconfig.json"
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "import"
+  ],
+  "ignorePatterns": [
+    "next.config.js",
+    "next-env-custom.d.ts",
+    "images.d.ts"
+  ],
+  "settings": {
+    "import/core-modules": [
+      "node",
+      "typescript",
+      "next",
+      "react",
+      "redux",
+      "@reduxjs/toolkit"
+    ],
+    "import/extensions": [
+      ".js",
+      ".jsx",
+      ".ts",
+      ".tsx"
+    ],
+    "import/parsers": {
+      "@typescript-eslint/parser": [
+        ".ts",
+        ".tsx"
+      ]
+    },
+    "import/resolver": {
+      "typescript": {
+        "projects": [
+          "**/tsconfig.json"
+        ]
+      },
+      "node": {
+        "extensions": [
+          ".ts",
+          ".tsx"
+        ]
+      }
+    }
+  },
+  "rules": { //base eslint
+    "semi": "off",
+    "no-console": 1,
+    "import/named": 1,
+    "prefer-const": [
+      1,
+      {
+        "destructuring": "any",
+        "ignoreReadBeforeAssign": true
+      }
+    ],
+    //ts
+    "@typescript-eslint/semi": 1,
+    "@typescript-eslint/no-var-requires": 1,
+    "@typescript-eslint/no-unsafe-return": 1,
+    "@typescript-eslint/no-non-null-assertion": 1,
+    "@typescript-eslint/prefer-optional-chain": 1,
+    "@typescript-eslint/explicit-module-boundary-types": 1,
+    "@typescript-eslint/explicit-function-return-type": 1,
+    "@typescript-eslint/prefer-for-of": 2,
+    "@typescript-eslint/prefer-as-const": 2,
+    "@typescript-eslint/no-empty-interface": [
+      1,
+      {
+        "allowSingleExtends": true
+      }
+    ],
+    "@typescript-eslint/no-floating-promises": [
+      1,
+      {
+        "ignoreVoid": true,
+        "ignoreIIFE": false
+      }
+    ],
+    "@typescript-eslint/restrict-template-expressions": [
+      1,
+      {
+        "allowNumber": true,
+        "allowAny": true,
+        "allowRegExp": true,
+        "allowNullish": true,
+        "allowBoolean": false
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      1,
+      {
+        "varsIgnorePattern": "^_",
+        "argsIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/no-misused-promises": [
+      2,
+      {
+        "checksVoidReturn": false,
+        "checksConditionals": false
+      }
+    ],
+    "@typescript-eslint/no-empty-function": [
+      2,
+      {
+        "allow": [
+          "arrowFunctions"
+        ]
+      }
+    ],
+    //react
+    "react/jsx-props-no-spreading": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": "off",
+    "react-hooks/rules-of-hooks": 2,
+    "react-hooks/exhaustive-deps": 0,
+    "react/prop-types": "off",
+    //prettire
+    "prettier/prettier": [
+      1,
+      {
+        "singleQuote": true,
+        "trailingComma": "all",
+        "semi": true,
+        "bracketSpacing": true,
+        "endOfLine": "auto",
+        "arrowParens": "avoid",
+        "printWidth": 120,
+        "useTabs": false,
+        "jsxBracketSameLine": false,
+        "proseWrap": "always",
+        "jsxSingleQuote": false,
+        "quoteProps": "as-needed",
+        "tabWidth": 2
+      },
+      {
+        "disableLanguages": [
+          "js",
+          "ts",
+          "tsx",
+          "jsx",
+          "scss",
+          "css",
+          "less",
+          "json"
+        ],
+        "usePrettierrc": true,
+        "fileInfoOptions": {
+          "withNodeModules": true
+        }
+      }
+    ]
+  }
+}

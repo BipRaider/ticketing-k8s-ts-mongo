@@ -1,6 +1,6 @@
 import { describe, test, expect } from '@jest/globals';
 
-import { query } from '../../test/server';
+import { query } from '../../test/utils/server';
 
 const validateResponse400 = (res: any) => {
   const { statusCode, body } = res;

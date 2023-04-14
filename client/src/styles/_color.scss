@@ -1,0 +1,42 @@
+// Default color
+$wite: rgb(255 255 255);
+$black: rgb(59 67 78);
+$gray-light: rgb(235 235 235);
+$gray: rgb(164 164 164);
+$gray-dark: rgb(108 112 119);
+$white: rgb(255 255 255);
+$primary: rgb(115 81 245);
+$primary-hover: rgb(99 68 223);
+$red-light: rgb(254 162 145);
+$red: rgb(252 131 109);
+$green: rgb(0 123 72);
+$green-light: rgb(200 248 228);
+
+// Color for themes
+$foreground-rgb-dark: rgb(0 0 0);
+$foreground-rgb-light: rgb(255 255 255);
+$background-start-rgb-light: rgb(255 255 255);
+$background-end-rgb-light: rgb(255 255 255);
+$background-start-rgb-dark: rgb(0 0 0);
+$background-end-rgb-dark: rgb(0 0 0);
+$primary-glow: conic-gradient(
+  from 180deg at 50% 50%,
+  #16abff33 0deg,
+  #0885ff33 55deg,
+  #54d6ff33 120deg,
+  #0071ff33 160deg,
+  transparent 360deg
+);
+$secondary-glow: radial-gradient(rgb(255 255 255), rgb(255 255 255 / 0%));
+$tile-start-rgb: rgb(239 245 249 / 100%);
+$tile-end-rgb: rgb(228 232 233 / 100%);
+$tile-border: conic-gradient(#00000080, #00000040, #00000030, #00000020, #00000010, #00000010, #00000080);
+$callout-rgb: rgb(238 240 241);
+$callout-border-rgb: rgb(172 175 176);
+$card-rgb: rgb(180 185 188);
+$card-border-rgb: rgb(131 134 135);
+$scroll-up-bx: rgb(0 0 0 / 5%);
+
+// Tags
+$gray-tag: rgb(81 100 140);
+$rad-tag: rgb(222 0 0);
