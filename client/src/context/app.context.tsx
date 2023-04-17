@@ -1,28 +1,22 @@
-import React, { createContext, PropsWithChildren, useState, memo } from 'react';
+import React, { createContext, PropsWithChildren, memo } from 'react';
 
-import { MenuItem } from '@src/interfaces/menu.interface';
 import { FirstLevelMenu } from '@src/interfaces/page.interface';
 
-export interface IAppContext {
-  menu: MenuItem[];
-  firstCategory: FirstLevelMenu;
-  setMenu?: React.Dispatch<React.SetStateAction<MenuItem[]>>;
+export interface IAppContext extends Record<string, unknown> {
+  pageName: FirstLevelMenu;
 }
 
 export const AppContext = createContext<IAppContext>({
-  menu: [],
-  firstCategory: FirstLevelMenu.SignIn,
+  pageName: FirstLevelMenu.SignIn,
 });
 
-export const AppContextProvider = ({ menu, firstCategory, children }: PropsWithChildren<IAppContext>): JSX.Element => {
-  const [menuState, setMenu] = useState<MenuItem[]>(menu);
+export const useAppOptions = (): IAppContext => React.useContext(AppContext);
 
+export const AppContextProvider = ({ pageName, children }: PropsWithChildren<IAppContext>): JSX.Element => {
   return (
     <AppContext.Provider
       value={{
-        menu: menuState,
-        firstCategory,
-        setMenu,
+        pageName,
       }}
     >
       {children}

@@ -6,7 +6,7 @@ import { Htag } from '@src/components';
 
 interface TypeProps extends Record<string, unknown> {}
 
-const SignInPage: React.FC<TypeProps> = (_data: TypeProps): JSX.Element => {
+const SignInPage: React.FC<TypeProps> = (_props: TypeProps): JSX.Element => {
   return (
     <>
       <Htag tag="h1">Sign In</Htag>

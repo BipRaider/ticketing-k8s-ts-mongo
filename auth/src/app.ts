@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request } from 'express';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 
@@ -13,6 +13,11 @@ const cookieSessionOptions: CookieSessionInterfaces.CookieSessionOptions = {
   maxAge: 24 * 60 * 60 * 1000, // 24 hours
 };
 const app = express();
+app.use((req: Request, _res, next) => {
+  console.dir(req.path);
+
+  next();
+});
 app.set('trust proxy', true); // traffic is being proximate to our application through ingress nginx.
 
 app.use(json());

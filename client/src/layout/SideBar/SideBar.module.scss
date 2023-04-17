@@ -3,9 +3,10 @@
 .sidebar {
   display: grid;
   grid-template-areas: 'logo . . menu';
-  grid-template-columns: 50px auto auto minmax(320px, 1200px);
+  grid-template-columns: 50px auto auto minmax(320px, auto);
   gap: 10px;
   align-content: start;
+  justify-content: space-between;
 }
 
 .menu {

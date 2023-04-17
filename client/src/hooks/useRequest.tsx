@@ -48,7 +48,6 @@ export const useRequest = <
         setData(data);
       } else setError('Something went wrong');
     } catch (e) {
-      if (e instanceof Error) setError(e.message);
       if (axios.isAxiosError<AxiosErrorResponse<{ message: string; data: ErrResponse }>>(e)) {
         if (e.response?.data?.error) {
           const { error } = e.response.data;
@@ -56,6 +55,7 @@ export const useRequest = <
           if (error?.data) setErrorData(error.data);
         }
       }
+      if (e instanceof Error) setError(e.message);
     }
   };
 

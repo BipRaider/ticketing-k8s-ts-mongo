@@ -1,7 +1,5 @@
 import React from 'react';
 
-// import axios from 'axios';
-
 import { withLayout } from '@src/layout/Layout';
 
 interface TypeProps extends Record<string, unknown> {}

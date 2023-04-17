@@ -1,4 +1,6 @@
 #!/bin/sh
+echo [-----------Check namespace---------------]
+kubectl get namespace
 echo [-----------Check Pods-ingress-nginx------]
 kubectl get pods -n ingress-nginx
 
