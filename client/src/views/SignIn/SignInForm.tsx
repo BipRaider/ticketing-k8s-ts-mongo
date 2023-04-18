@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import cn from 'classnames';
 
-import { useUserOptions } from '@src/context/user.context';
+import { useAppOptions } from '@src/context/app.context';
 import { API } from '@src/helpers/api';
 import { Input, Button, Htag } from '@src/components';
 import { useRequest } from '@src/hooks';
@@ -22,7 +22,7 @@ export const SignInForm: React.FC<SignInFormProps> = ({ className, ...props }: S
     clearErrors,
   } = useForm<ISignInForm>();
   const [data, setData] = useState<ISignInSentResponse['data']>();
-  const { setUserName } = useUserOptions();
+  const { setUserName } = useAppOptions();
   const router = useRouter();
   const { doRequest, payload, isSuccess, error, errorData } = useRequest<ISignInSentResponse, ApiErrorData[]>({
     method: 'post',

@@ -5,9 +5,67 @@ import ProductsIcon from './icons/products.svg';
 
 import { FirstLevelMenu } from '../interfaces/page.interface';
 
-export const firstLevelMenu = [
-  { route: 'auth/signin', name: 'sign in', icon: <CoursesIcon />, id: FirstLevelMenu.SignIn, auth: false },
-  { route: 'auth/signup', name: 'sign up', icon: <ServicesIcon />, id: FirstLevelMenu.SignUp, auth: false },
-  { route: 'auth/signout', name: 'sign out', icon: <BooksIcon />, id: FirstLevelMenu.SignOut, auth: true },
-  { route: 'auth/currentuser', name: 'user', icon: <ProductsIcon />, id: FirstLevelMenu.CurrentUser, auth: true },
+interface firstLevelMenu {
+  /*** Href of the page to link to the site. */
+  href: string;
+  /*** Page name. */
+  label: string;
+  /*** Icon to link. */
+  icon?: JSX.Element;
+  /*** The page name to searching. */
+  id: FirstLevelMenu;
+  /*** Need authorized or not to page. */
+  auth: boolean;
+  /*** Public page or not .*/
+  public: boolean;
+  /*** Private page or not .*/
+  private: boolean;
+}
+
+export const firstLevelMenu: firstLevelMenu[] = [
+  {
+    href: '/',
+    label: 'home',
+    icon: <ProductsIcon />,
+    id: FirstLevelMenu.Home,
+    auth: true,
+    public: true,
+    private: false,
+  },
+  {
+    href: '/auth/signin',
+    label: 'sign in',
+    icon: <CoursesIcon />,
+    id: FirstLevelMenu.SignIn,
+    auth: false,
+    public: true,
+    private: false,
+  },
+  {
+    href: '/auth/signup',
+    label: 'sign up',
+    icon: <ServicesIcon />,
+    id: FirstLevelMenu.SignUp,
+    auth: false,
+    public: true,
+    private: false,
+  },
+  {
+    href: '/auth/signout',
+    label: 'sign out',
+    icon: <BooksIcon />,
+    id: FirstLevelMenu.SignOut,
+    auth: true,
+    public: false,
+    private: true,
+  },
+  {
+    href: '/auth/currentuser',
+    label: 'user',
+    icon: <ProductsIcon />,
+    id: FirstLevelMenu.CurrentUser,
+    auth: true,
+    public: false,
+    private: true,
+  },
 ];

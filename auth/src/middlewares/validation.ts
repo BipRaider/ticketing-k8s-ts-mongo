@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
-
-import { ErrorEx } from '../helper';
+import { ErrorEx } from '@bipdev/common';
 
 /*** Middleware that handles requests from clients.
  * @throw Error `400` if the request is invalid and return a list of errors to the client.

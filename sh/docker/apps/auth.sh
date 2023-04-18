@@ -1,9 +1,12 @@
 #!/bin/sh
+docker=bipus
+app=auth
+
 echo [Build the latest]:
-docker build -t bipus/auth ./auth
+docker build -t bipus/$app ./$app
 
 echo [Push the latest]:
-docker push bipus/auth
+docker push bipus/$app
 
-echo [Restart auth]
-kubectl rollout restart deployment auth-depl
+echo [Restart $app]
+kubectl rollout restart deployment $app-depl

@@ -1,10 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
+import { ErrorEx, JwtService } from '@bipdev/common';
 
 import { UserSignUp } from '@src/interfaces';
 import { MongoService } from '@src/database';
-import { JwtService, ErrorEx } from '@src/helper';
 
-export const SignUp = async (req: Request<unknown, unknown, UserSignUp>, res: Response, next: NextFunction) => {
+export const SignUp = async (
+  req: Request<unknown, unknown, UserSignUp>,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
   try {
     const DB = new MongoService().user;
     const JWT = new JwtService();
@@ -15,7 +19,8 @@ export const SignUp = async (req: Request<unknown, unknown, UserSignUp>, res: Re
 
     const user = await DB.addition({ email, password });
 
-    const accessToken = await JWT.accessToken({ email: user.email, id: user.id }, req);
+    const accessToken = await JWT.accessToken({ email: user.email, id: user.id });
+    JWT.addToSession(req);
 
     res.status(201).send({
       data: {
@@ -24,6 +29,7 @@ export const SignUp = async (req: Request<unknown, unknown, UserSignUp>, res: Re
         accessToken,
       },
     });
+    return;
   } catch (e) {
     next(e);
   }

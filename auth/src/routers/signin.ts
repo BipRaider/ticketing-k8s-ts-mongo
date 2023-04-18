@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
+import { ErrorEx, JwtService, PasswordService } from '@bipdev/common';
 
 import { UserSignIn } from '@src/interfaces';
-
-import { PasswordService, JwtService, ErrorEx } from '@src/helper';
 import { MongoService } from '@src/database';
 
 export const SignIn = async (req: Request<unknown, unknown, UserSignIn>, res: Response, next: NextFunction) => {
@@ -17,7 +16,8 @@ export const SignIn = async (req: Request<unknown, unknown, UserSignIn>, res: Re
     const passCheck = await PasswordService.compare(user.password, password);
     if (!passCheck) throw new ErrorEx('Invalid credentials', null, 401);
 
-    const accessToken = await JWT.accessToken({ email: user.email, id: user.id }, req);
+    const accessToken = await JWT.accessToken({ email: user.email, id: user.id });
+    JWT.addToSession(req);
 
     res.status(201).send({
       data: {

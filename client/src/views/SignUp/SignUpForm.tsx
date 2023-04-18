@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import cn from 'classnames';
 
-import { useUserOptions } from '@src/context/user.context';
+import { useAppOptions } from '@src/context/app.context';
 import { API } from '@src/helpers/api';
 import { Input, Button, Htag } from '@src/components';
 
@@ -21,7 +21,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ className, ...props }: S
     reset,
     clearErrors,
   } = useForm<ISignUpForm>();
-  const { setUserName } = useUserOptions();
+  const { setUserName } = useAppOptions();
   const [data, setData] = useState<ISignUpSentResponse['data']>();
   const router = useRouter();
   const { doRequest, payload, isSuccess, error, errorData } = useRequest<ISignUpSentResponse, ApiErrorData[]>({

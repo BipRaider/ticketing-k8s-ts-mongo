@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { withLayout } from '@src/layout/Layout';
+import { withPageLayout } from '@src/layout/Layout';
 import { SignInForm } from '@src/views';
 import { Htag } from '@src/components';
 
@@ -15,4 +15,4 @@ const SignInPage: React.FC<TypeProps> = (_props: TypeProps): JSX.Element => {
   );
 };
 
-export default withLayout(SignInPage);
+export default withPageLayout(SignInPage);

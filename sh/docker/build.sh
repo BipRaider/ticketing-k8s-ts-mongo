@@ -1,17 +1,27 @@
 #!/bin/sh
-echo [Build the latest]:
-docker build -t bipus/auth ./auth
+docker=bipus
+auth=auth
+client=client
+tickets=tickets
 
-echo [Push the latest]:
-docker push bipus/auth
+echo [Build the $auth latest]:
+docker build -t $docker/$auth ./$auth
 
-echo [Build the latest]:
-docker build -t bipus/client ./client
+echo [Push the $auth latest]:
+docker push $docker/$auth
 
-echo [Push the latest]:
-docker push bipus/client
+echo [Build the $client latest]:
+docker build -t $docker/$client ./$client
 
+echo [Push the $client latest]:
+docker push $docker/$client
+
+echo [Build the $tickets latest]:
+docker build -t $docker/$tickets ./$tickets
+
+echo [Push the $tickets latest]:
+docker push $docker/$tickets
 
 echo [List all images]:
-docker images --filter=reference='bipus/*'
+docker images --filter=reference="$docker/*"
 

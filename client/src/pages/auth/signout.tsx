@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { withLayout } from '@src/layout/Layout';
+import { withPageLayout } from '@src/layout/Layout';
+import { SignOut } from '@src/views';
 
 interface TypeProps extends Record<string, unknown> {}
 
-const SignOut = (_data: TypeProps): JSX.Element => {
-  return <>Type page SignOut: </>;
+const SignOutPage = (_data: TypeProps): JSX.Element => {
+  return <SignOut></SignOut>;
 };
 
-export default withLayout(SignOut);
+export default withPageLayout(SignOutPage);

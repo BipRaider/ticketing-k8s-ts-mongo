@@ -1,27 +1,26 @@
-import React, { createContext, PropsWithChildren, memo } from 'react';
+import React, { createContext, PropsWithChildren, useState } from 'react';
 
-import { FirstLevelMenu } from '@src/interfaces/page.interface';
-
-export interface IAppContext extends Record<string, unknown> {
-  pageName: FirstLevelMenu;
+export interface IAppContext {
+  userName?: string;
+  setUserName?: React.Dispatch<React.SetStateAction<string>>;
+  email?: string;
 }
 
-export const AppContext = createContext<IAppContext>({
-  pageName: FirstLevelMenu.SignIn,
-});
+export const AppContext = createContext<IAppContext>({ userName: '' });
 
 export const useAppOptions = (): IAppContext => React.useContext(AppContext);
 
-export const AppContextProvider = ({ pageName, children }: PropsWithChildren<IAppContext>): JSX.Element => {
+export const AppContextProvider = ({ email, children }: PropsWithChildren<IAppContext>): JSX.Element => {
+  const [userName, setUserName] = useState<string>(email ? email : '');
+
   return (
     <AppContext.Provider
       value={{
-        pageName,
+        userName,
+        setUserName,
       }}
     >
       {children}
     </AppContext.Provider>
   );
 };
-
-export const MemoAppContextProvider = memo(AppContextProvider);

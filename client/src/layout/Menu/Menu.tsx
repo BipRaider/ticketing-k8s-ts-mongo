@@ -2,31 +2,33 @@ import Link from 'next/link';
 import React from 'react';
 import cn from 'classnames';
 
-import { useAppOptions } from '@src/context/app.context';
+import { usePageOptions } from '@src/context/page.context';
 import { firstLevelMenu } from '@src/helpers/helpers';
 
 import styles from './Menu.module.scss';
-import { useUserOptions } from '@src/context/user.context';
+import { useAppOptions } from '@src/context/app.context';
 
 export const Menu: React.FC = (): JSX.Element => {
-  const { firstCategory } = useAppOptions();
-  const { userName } = useUserOptions();
+  const { firstCategory } = usePageOptions();
+  const { userName } = useAppOptions();
 
   const buildFirstLevel = (): JSX.Element => {
     return (
       <ul className={styles.firstLevelList}>
         {firstLevelMenu.map(m => {
           if (userName && !m.auth) return;
-          if (!userName && m.auth) return;
+
+          if (!userName && m.private) return;
+
           return (
-            <li key={m.route}>
+            <li key={m.id} className="nav-item">
               <Link
-                href={`/${m.route}`}
+                href={m.href}
                 className={cn(styles.firstLevel, {
                   [styles.firstLevelActive]: m.id == firstCategory,
                 })}
               >
-                <span>{m.name}</span>
+                <span>{m.label}</span>
               </Link>
             </li>
           );

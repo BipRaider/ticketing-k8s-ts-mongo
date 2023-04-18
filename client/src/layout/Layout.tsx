@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { NextPage, NextPageContext } from 'next';
 
-import { AppContextProvider, IAppContext } from '@src/context/app.context';
+import { PageContextProvider, IPageContext } from '@src/context/page.context';
 
 import styles from './Layout.module.scss';
 import { LayoutProps } from './Layout.props';
@@ -26,22 +26,22 @@ const Layout: React.FC<LayoutProps> = ({ children }: LayoutProps): JSX.Element =
 
 type FnProps<T> = (context: NextPageContext) => T | Promise<T>;
 
-/*** Wrapper for all components.*/
-export const withLayout = <T extends Record<string, unknown> & IAppContext>(
+/*** Wrapper for all page components.*/
+export const withPageLayout = <T extends Record<string, unknown> & IPageContext>(
   Component: FunctionComponent<T>,
   fn?: FnProps<T>,
 ): NextPage<T> => {
-  function withLayoutComponent(props: T): JSX.Element {
+  function withPageLayoutComponent(props: T): JSX.Element {
     return (
-      <AppContextProvider pageName={props.pageName}>
+      <PageContextProvider pageName={props.pageName}>
         <Layout>
           <Component {...props} />
         </Layout>
-      </AppContextProvider>
+      </PageContextProvider>
     );
   }
 
-  if (fn) withLayoutComponent.getInitialProps = fn;
+  if (fn) withPageLayoutComponent.getInitialProps = fn;
 
-  return withLayoutComponent;
+  return withPageLayoutComponent;
 };

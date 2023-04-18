@@ -1,8 +1,8 @@
 import { Schema, model } from 'mongoose';
+import { PasswordService } from '@bipdev/common';
 
 import { DB_Module } from '@src/database';
 import { IUserAttr, IUserModel, IUserSchema, TUserInstance } from '@src/interfaces';
-import { PasswordService } from '@src/helper';
 
 const UserSchema = new Schema<IUserSchema, IUserModel>(
   {

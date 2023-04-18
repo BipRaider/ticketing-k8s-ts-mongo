@@ -1,9 +1,12 @@
 #!/bin/sh
+docker=bipus
+app=client
+
 echo [Build the latest]:
-docker build -t bipus/client ./client
+docker build -t bipus/$app ./$app
 
 echo [Push the latest]:
-docker push bipus/client
+docker push bipus/$app
 
-echo [Restart client]
-kubectl rollout restart deployment client-depl
+echo [Restart $app]
+kubectl rollout restart deployment $app-depl

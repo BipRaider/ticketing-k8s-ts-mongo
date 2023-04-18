@@ -6,6 +6,7 @@
   "eslint.workingDirectories": [
     "./client",
     "./auth",
-    "./apps"
+    "./apps",
+    "./tickets"
   ]
 }

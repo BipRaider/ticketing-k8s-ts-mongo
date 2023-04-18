@@ -1,6 +1,7 @@
+import { ErrorEx } from '@bipdev/common';
+
 import { app } from './app';
 import { MongoService } from './database';
-import { ErrorEx } from './helper';
 
 const start = async () => {
   console.log('Service start...');

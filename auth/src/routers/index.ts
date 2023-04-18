@@ -1,7 +1,8 @@
 import express, { Router } from 'express';
 import { body } from 'express-validator';
+import { authHandler } from '@bipdev/common';
 
-import { authHandler, authRequire, validation } from '@src/middlewares';
+import { validation } from '@src/middlewares';
 
 import { CurrentUser } from './currentuser';
 import { SignUp } from './signup';
@@ -19,7 +20,7 @@ const validateUser = [
     .withMessage('Password must be between 4 and 20 symbols.'),
 ];
 
-router.get('/currentuser', authHandler, authRequire, CurrentUser);
+router.get('/currentuser', authHandler, CurrentUser);
 router.post('/signup', validateUser, validation, SignUp);
 router.post('/signin', validateUser, validation, SignIn);
 

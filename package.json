@@ -1,7 +1,8 @@
 {
   "name": "ticketing",
   "version": "1.0.0",
-  "description": "",
+  "author": "BipRaider",
+  "description": "k8s microservice",
   "main": "index.js",
   "scripts": {
     "dev": "skaffold dev",
@@ -16,7 +17,5 @@
     "d:clear": "bash ./sh/docker/clear.sh",
     "d:build": "bash ./sh/docker/build.sh",
     "kompose": "wsl kompose --file docker-compose.yml convert"
-  },
-  "author": "",
-  "license": "ISC"
+  }
 }

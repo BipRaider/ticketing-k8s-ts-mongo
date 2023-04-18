@@ -22,5 +22,14 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: '**/*.js'
+          - src: 'src/**/*'
+            dest: .
+
+    - image: bipus/tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*'
             dest: .

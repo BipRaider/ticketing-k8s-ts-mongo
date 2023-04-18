@@ -1,8 +1,12 @@
 export const API = {
   auth: {
+    /** `/api/v1/users/signin` */
     signin: '/api/v1/users/signin',
+    /** `/api/v1/users/signup` */
     signup: '/api/v1/users/signup',
+    /** `/api/v1/users/signout` */
     signout: '/api/v1/users/signout',
+    /** `/api/v1/users/currentuser` */
     currentuser: '/api/v1/users/currentuser',
   },
   urlList: {

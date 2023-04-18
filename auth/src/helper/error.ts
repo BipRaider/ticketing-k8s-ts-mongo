@@ -1,4 +1,3 @@
-// import { ValidationError } from 'express-validator';
 import { Response } from 'express';
 
 export type StatusCodes = 404 | 401 | 500 | 400 | 403;
