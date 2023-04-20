@@ -1,6 +1,6 @@
 import { describe, test } from '@jest/globals';
 
-import { query, ResErr404, StatusIsNot, url, createCookie } from '../../test/utils';
+import { query, ResErr404, StatusIsNot, url } from '../../test/utils';
 
 describe('[Router]:', () => {
   test('[404]: Page not found:', async () => {
@@ -21,7 +21,7 @@ describe('[Router]:', () => {
     StatusIsNot(res, 404);
   });
   test(`[PUT]: Page ${url()} found.`, async () => {
-    const res = await query(url(), 'put', {});
+    const res = await query(url("/some_id'"), 'put', {});
     StatusIsNot(res, 404);
   });
 });

@@ -33,8 +33,8 @@ describe('[GET ALL]:', () => {
   });
 
   describe('[ERROR]:', () => {
-    test('user is unauthorized:', async () => {
-      const res = await query(routerUrl.getById('s'), 'get', ticketsCreate);
+    test('[401] user is unauthorized:', async () => {
+      const res = await query(routerUrl.getAll, 'get', ticketsCreate);
       ResErr(res, 401);
     });
   });

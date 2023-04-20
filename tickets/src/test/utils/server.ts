@@ -28,7 +28,7 @@ export const query = async (
 export const createCookie = async (data?: any): Promise<{ cookie: string[]; accessToken: string }> => {
   const JWT = new JwtService();
   //jwt payload
-  const user = data || { id: 'ssdad312423', email: 'test@test.test' };
+  const user = data || { id: '64413d6d2ef980df596c0ddb', email: 'test@test.test' };
   //create access token
   const accessToken = await JWT.accessToken(user);
   //build session object

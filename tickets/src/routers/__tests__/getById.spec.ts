@@ -1,5 +1,6 @@
 import { describe, test, expect } from '@jest/globals';
 import { query, ResErr, ResOK, routerUrl, createCookie } from '../../test/utils';
+import { Types } from 'mongoose';
 
 const ticketsCreate = { title: 'first ticket', price: 100 };
 
@@ -44,8 +45,9 @@ describe('[GET BY ID]:', () => {
       ResErr(res, 400, 'Invalid credentials');
     });
     test('[404] ticket is not exist', async () => {
+      const id = new Types.ObjectId().toHexString();
       const { cookie } = await createCookie();
-      const res = await query(routerUrl.getById('64413d6d2ef980df596c0ddb'), 'get', {}, '', cookie);
+      const res = await query(routerUrl.getById(id), 'get', {}, '', cookie);
       ResErr(res, 404, 'Ticket is not exist');
     });
   });

@@ -16,11 +16,11 @@ const validateTicket = [
   body('price').notEmpty().trim().isInt({ min: 0, max: 1000 }).withMessage('price must be between 0 and 10 symbols.'),
 ];
 
-const validateParamsId = [param('id').notEmpty().isLength({ min: 23, max: 24 }).withMessage('id must be valid')];
+const validateParamsId = [param('id').notEmpty().withMessage('id must be')];
 
 router.get('/', authUserRequire, getAll);
 router.get('/:id', authUserRequire, validateParamsId, validation, getById);
 router.post('/', authUserRequire, validateTicket, validation, Create);
-router.put('/', authUserRequire, validateTicket, validation, Update);
+router.put('/:id', authUserRequire, validateParamsId, validateTicket, validation, Update);
 
 export default router;

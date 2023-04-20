@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
+import { isObjectIdOrHexString } from 'mongoose';
 import { ErrorEx } from '@bipdev/common';
 
 /*** Middleware that handles requests from clients.
@@ -8,6 +9,23 @@ import { ErrorEx } from '@bipdev/common';
  */
 export const validation = (req: Request, _res: Response, next: NextFunction) => {
   const errors = validationResult(req);
+  if (req.params?.id && !isObjectIdOrHexString(req.params.id)) {
+    throw new ErrorEx(
+      'Invalid credentials',
+      [{ param: 'id', msg: 'Is not ObjectId', location: 'params', value: req.params?.id }],
+      400,
+    );
+  }
+
+  if (req.body?.userId && !isObjectIdOrHexString(req.body?.userId)) {
+    console.dir('!isValidObjectId(req.body.userId');
+    throw new ErrorEx(
+      'Invalid credentials',
+      [{ param: 'userId', msg: 'Is not ObjectId', location: 'body', value: req.body.userId }],
+      400,
+    );
+  }
+
   if (!errors.isEmpty()) throw new ErrorEx('Invalid credentials', errors.array(), 400);
 
   next();

@@ -30,43 +30,54 @@ describe('[Create]:', () => {
   });
 
   describe('[ERROR]:', () => {
-    test('user is unauthorized:', async () => {
+    test('[401] user is unauthorized:', async () => {
       const res = await query(routerUrl.create, 'post', ticketsCreate);
       ResErr(res, 401);
     });
-    test('the ticket is exist:', async () => {
+    test('[400] the ticket is exist:', async () => {
       const { cookie } = await createCookie();
       await query(routerUrl.create, 'post', ticketsCreate, '', cookie);
       const res = await query(routerUrl.create, 'post', ticketsCreate, '', cookie);
       ResErr(res, 400, 'Ticket exist');
     });
-    test('missing data of an title and price:', async () => {
+    test('[400] missing data of a title and price:', async () => {
       const { cookie } = await createCookie();
       const res = await query(routerUrl.create, 'post', { title: '', price: '' }, '', cookie);
       ResErr(res, 400, 'Invalid credentials');
     });
-    test('missing data of an title:', async () => {
+    test('[400] missing data of a title:', async () => {
       const { cookie } = await createCookie();
       const res = await query(routerUrl.create, 'post', { title: '', price: ticketsCreate.price }, '', cookie);
       ResErr(res, 400, 'Invalid credentials');
     });
-    test('missing data of a price:', async () => {
-      const { cookie } = await createCookie();
-      const res = await query(routerUrl.create, 'post', { title: ticketsCreate.title, price: '' }, '', cookie);
-      ResErr(res, 400, 'Invalid credentials');
-    });
 
-    test('invalid data of a title:', async () => {
+    test('[400] invalid data of a title:', async () => {
       const { cookie } = await createCookie();
       const res = await query(routerUrl.create, 'post', { title: '1', price: ticketsCreate.price }, '', cookie);
       ResErr(res, 400, 'Invalid credentials');
     });
-    test('invalid data of a length less price:', async () => {
+    test('[400] invalid data of a longer length title:', async () => {
+      const { cookie } = await createCookie();
+      const res = await query(
+        routerUrl.create,
+        'post',
+        { title: '11111111111111111111111111111111asdasdasdasdasdasd', price: ticketsCreate.price },
+        '',
+        cookie,
+      );
+      ResErr(res, 400, 'Invalid credentials');
+    });
+    test('[400] missing data of a price:', async () => {
+      const { cookie } = await createCookie();
+      const res = await query(routerUrl.create, 'post', { title: ticketsCreate.title, price: '' }, '', cookie);
+      ResErr(res, 400, 'Invalid credentials');
+    });
+    test('[400] invalid data of a length less price:', async () => {
       const { cookie } = await createCookie();
       const res = await query(routerUrl.create, 'post', { title: ticketsCreate.title, price: -1 }, '', cookie);
       ResErr(res, 400, 'Invalid credentials');
     });
-    test('invalid data of a longer length price:', async () => {
+    test('[400] invalid data of a longer length price:', async () => {
       const { cookie } = await createCookie();
       const res = await query(
         routerUrl.create,

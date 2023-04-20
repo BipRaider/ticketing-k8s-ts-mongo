@@ -16,7 +16,7 @@ export interface ITicketsSchema extends Document<ObjectId | string>, ITicketsAtt
 }
 
 export type TicketsCreate = Omit<Tickets, 'id'>;
-export type TicketsUpdate = Tickets;
+export type TicketsUpdate = Omit<Tickets, 'id'>;
 export type TTickets = Pick<ITicketsSchema, 'title' | 'price' | '_id' | 'id' | 'userId'>;
 export type TTicketsInstance = ITicketsSchema;
 
