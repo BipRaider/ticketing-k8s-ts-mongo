@@ -4,14 +4,17 @@ import { app } from './app';
 import { MongoService } from './database';
 
 const start = async () => {
-  console.log('Service start...');
+  const SRV = process.env['SRV_NAME'];
+  const port = process.env[`${SRV}_SRV_SERVICE_PORT`] || 8000;
   const salt = process.env['JWT_SALT'];
-  if (!salt) throw new ErrorEx('Forbidden', null, 403);
+  const dburl = process.env['MONGO_URL'];
+  if (!salt && !dburl) throw new ErrorEx('Forbidden', null, 403);
+  console.log('Service start...');
 
   await new MongoService().connect();
 
-  app.listen(8001, () => {
-    console.log('Listening on port 8001!');
+  app.listen(port, () => {
+    console.log(`Listening on port ${port}!`);
   });
 };
 

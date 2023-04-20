@@ -12,7 +12,7 @@ export class MongoService {
 
   constructor() {
     this.client = mongoose;
-    this.url = 'mongodb://tickets-mongo-srv:27017/tickets';
+    this.url = process.env['MONGO_URL'];
 
     this._tickets = TicketsModel;
   }

@@ -5,7 +5,7 @@ const config: Config.InitialOptions = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   verbose: true,
-  displayName: 'test',
+  displayName: 'auth',
 
   // test files
   testMatch: [

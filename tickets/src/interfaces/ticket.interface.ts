@@ -1,8 +1,9 @@
 import { Document, Model, ObjectId } from 'mongoose';
 
 export interface ITicketsAttr {
-  email: string;
-  password: string;
+  title: string;
+  price: number;
+  userId: string;
 }
 
 export interface Tickets extends ITicketsAttr {
@@ -14,9 +15,9 @@ export interface ITicketsSchema extends Document<ObjectId | string>, ITicketsAtt
   readonly updateAt?: Date;
 }
 
-export type TicketsSignUp = Omit<Tickets, 'id'>;
-export type TicketsSignIn = Omit<Tickets, 'id'>;
-export type TTickets = Pick<ITicketsSchema, 'email' | 'password' | '_id'>;
+export type TicketsCreate = Omit<Tickets, 'id'>;
+export type TicketsUpdate = Tickets;
+export type TTickets = Pick<ITicketsSchema, 'title' | 'price' | '_id' | 'id' | 'userId'>;
 export type TTicketsInstance = ITicketsSchema;
 
 export interface ITicketsModel extends Model<TTicketsInstance> {

@@ -30,6 +30,10 @@ spec:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_SALT
+            - name: MONGO_URL
+              value: 'mongodb://auth-mongo-srv:27017/auth'
+            - name: SRV_NAME
+              value: 'AUTH'
 ---
 apiVersion: v1
 kind: Service
@@ -41,5 +45,5 @@ spec:
   ports:
     - name: auth
       protocol: TCP
-      port: 8001
-      targetPort: 8001
+      port: 8000
+      targetPort: 8000

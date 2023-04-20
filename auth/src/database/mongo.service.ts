@@ -12,7 +12,7 @@ export class MongoService {
 
   constructor() {
     this.client = mongoose;
-    this.url = 'mongodb://auth-mongo-srv:27017/auth';
+    this.url = process.env['MONGO_URL'];
 
     this._user = UserModel;
   }

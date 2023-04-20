@@ -32,6 +32,7 @@ describe('[SignUp]:', () => {
     const res = await query(routerUrl, 'post', userSignUp);
     validateResponse201(res, 'test@test.test');
     const cookie = res.get('Set-Cookie');
+
     expect(cookie).toBeDefined();
   });
   describe('Status [400]:', () => {

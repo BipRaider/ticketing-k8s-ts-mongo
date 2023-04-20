@@ -5,8 +5,12 @@ const config: Config.InitialOptions = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   verbose: true,
-  displayName: 'test',
+  displayName: {
+    name: 'tickets',
+    color: 'yellowBright',
+  },
 
+  roots: ['<rootDir>/src'],
   // test files
   testMatch: [
     '<rootDir>/**/*.(test|spec).{js,jsx,ts,tsx}',
@@ -15,7 +19,6 @@ const config: Config.InitialOptions = {
   ],
 
   // coverage
-  roots: ['<rootDir>/src'],
   collectCoverage: true,
   coverageDirectory: '../coverage',
   collectCoverageFrom: ['**/*.(t|j)s', '!src/test/utils/*.ts', '!src/interfaces/*.ts'],
@@ -40,6 +43,7 @@ const config: Config.InitialOptions = {
   //Env data
   testEnvironmentOptions: {
     url: 'http://localhost/',
+    JWT_SALT: 'jwt',
   },
 
   //Ignore files or folder

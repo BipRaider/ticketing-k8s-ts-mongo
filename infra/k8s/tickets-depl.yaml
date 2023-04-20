@@ -30,6 +30,10 @@ spec:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_SALT
+            - name: MONGO_URL
+              value: 'mongodb://tickets-mongo-srv:27017/tickets'
+            - name: SRV_NAME
+              value: 'TICKETS'
 ---
 apiVersion: v1
 kind: Service
