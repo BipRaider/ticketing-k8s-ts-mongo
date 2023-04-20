@@ -15,17 +15,16 @@ describe('[Create]:', () => {
       ticket = data;
     });
 
-    test('ticket is success:', async () => {
+    test('ticket is success:', () => {
       expect(ticket.title).toBe(ticketsCreate.title);
     });
-    test('price is success:', async () => {
+    test('price is success:', () => {
       expect(ticket.price).toBe(ticketsCreate.price);
     });
-    test('id is success:', async () => {
+    test('id is success:', () => {
       expect(ticket.id).toBeDefined();
     });
-    test('userId is success:', async () => {
-      console.dir(ticket);
+    test('userId is success:', () => {
       expect(ticket.userId).toBeDefined();
     });
   });

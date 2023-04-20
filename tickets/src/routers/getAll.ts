@@ -7,8 +7,8 @@ export const getAll = async (_req: Request<{ id: string }>, res: Response): Prom
 
   const items = await DB.find().exec();
 
-  res.status(201).send(
-    items.map(item => {
+  res.status(200).send({
+    data: items.map(item => {
       return {
         id: item.id,
         title: item.title,
@@ -16,5 +16,5 @@ export const getAll = async (_req: Request<{ id: string }>, res: Response): Prom
         price: item.price,
       };
     }),
-  );
+  });
 };
