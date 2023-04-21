@@ -9,6 +9,10 @@ import { ErrorEx } from '@bipdev/common';
  */
 export const validation = (req: Request, _res: Response, next: NextFunction) => {
   const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    throw new ErrorEx('Invalid credentials', errors.array(), 400);
+  }
+
   if (req.params?.id && !isObjectIdOrHexString(req.params.id)) {
     throw new ErrorEx(
       'Invalid credentials',
@@ -17,16 +21,13 @@ export const validation = (req: Request, _res: Response, next: NextFunction) => 
     );
   }
 
-  if (req.body?.userId && !isObjectIdOrHexString(req.body?.userId)) {
-    console.dir('!isValidObjectId(req.body.userId');
+  if (req?.user?.id && !isObjectIdOrHexString(req?.user?.id)) {
     throw new ErrorEx(
       'Invalid credentials',
       [{ param: 'userId', msg: 'Is not ObjectId', location: 'body', value: req.body.userId }],
       400,
     );
   }
-
-  if (!errors.isEmpty()) throw new ErrorEx('Invalid credentials', errors.array(), 400);
 
   next();
 };

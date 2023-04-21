@@ -69,7 +69,7 @@ describe('[Update]:', () => {
   });
   describe('[OK]:', () => {
     let ticket: any = {};
-    test('successful update:', async () => {
+    test('[200] successful update:', async () => {
       const { id, cookie } = await getIdTicket();
 
       const res = await query(routerUrl.update(id), 'put', ticketsUpdate, '', cookie);

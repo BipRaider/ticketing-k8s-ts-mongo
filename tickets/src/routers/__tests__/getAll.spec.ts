@@ -6,7 +6,7 @@ const ticketsCreate = { title: 'first ticket', price: 100 };
 describe('[GET ALL]:', () => {
   describe('[OK]:', () => {
     let ticket: any = {};
-    test('successful create:', async () => {
+    test('[200] successful create:', async () => {
       const { cookie } = await createCookie();
       const ticketCreated = await query(routerUrl.create, 'post', ticketsCreate, '', cookie);
       ResOK(ticketCreated, 201);
