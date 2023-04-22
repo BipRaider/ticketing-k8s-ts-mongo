@@ -13,7 +13,11 @@ const router: Router = express.Router();
 
 const validateTicket = [
   body('title').isLength({ min: 4, max: 20 }).withMessage('Title must be valid'),
-  body('price').notEmpty().trim().isInt({ min: 0, max: 1000 }).withMessage('price must be between 0 and 10 symbols.'),
+  body('price')
+    .notEmpty()
+    .trim()
+    .isFloat({ gt: 0, max: 1000 })
+    .withMessage('price must be between 0 and 1000 symbols.'),
 ];
 
 const validateParamsId = [param('id').notEmpty().withMessage('id must be')];

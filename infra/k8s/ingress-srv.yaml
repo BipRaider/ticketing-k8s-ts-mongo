@@ -22,7 +22,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: auth-srv
+                name: tickets-srv
                 port:
                   number: 8000
 

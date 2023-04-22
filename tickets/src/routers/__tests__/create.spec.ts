@@ -6,7 +6,7 @@ const ticketsCreate = { title: 'first ticket', price: 100 };
 describe('[Create]:', () => {
   describe('[OK]:', () => {
     let ticket: any = {};
-    test('[201] successful create:', async () => {
+    test('[201] create the ticket successfully:', async () => {
       const { cookie } = await createCookie();
       const res = await query(routerUrl.create, 'post', ticketsCreate, '', cookie);
       ResOK(res, 201);
@@ -15,16 +15,16 @@ describe('[Create]:', () => {
       ticket = data;
     });
 
-    test('ticket is success:', () => {
+    test('returns the title valid:', () => {
       expect(ticket.title).toBe(ticketsCreate.title);
     });
-    test('price is success:', () => {
+    test('returns the price valid:', () => {
       expect(ticket.price).toBe(ticketsCreate.price);
     });
-    test('id is success:', () => {
+    test('returns correct id:', () => {
       expect(ticket.id).toBeDefined();
     });
-    test('userId is success:', () => {
+    test('returns correct userId:', () => {
       expect(ticket.userId).toBeDefined();
     });
   });

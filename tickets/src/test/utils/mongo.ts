@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { ObjectId, Types } from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 
 let mongoServer: MongoMemoryServer;
@@ -27,3 +27,5 @@ export const dbDisconnect = async () => {
     await mongoose.connection.close();
   } catch {}
 };
+
+export const createMongoId = (): string | ObjectId => new Types.ObjectId().toHexString();

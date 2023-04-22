@@ -15,6 +15,9 @@ kubectl apply -f ./infra/k8s/tickets-depl.yaml
 echo [Apply tickets-mongo]
 kubectl apply -f ./infra/k8s/tickets-mongo-depl.yaml
 
+echo [Apply nats-srv]
+kubectl apply -f ./infra/k8s/nast-depl.yaml
+
 echo [Apply ingress-srv]
 kubectl apply -f ./infra/k8s/ingress-srv.yaml
 

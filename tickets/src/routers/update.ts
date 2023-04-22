@@ -14,8 +14,12 @@ export const Update = async (
     const { id } = req.params;
     const { title, price } = req.body;
 
+    const exist = await DB.findById(id).exec();
+
+    if (!exist) throw new ErrorEx('Ticket is not exist', null, 404);
+    if (exist.userId !== req?.user?.id) throw new ErrorEx('Unauthorized', null, 401);
+
     const item = await DB.findByIdAndUpdate(id, { $set: { title, price } }, { new: true }).exec();
-    if (!item) throw new ErrorEx('Ticket is not exist', null, 404);
 
     res.status(200).send({
       data: {

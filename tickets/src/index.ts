@@ -5,6 +5,7 @@ import { MongoService } from './database';
 
 const start = async () => {
   const SRV = process.env['SRV_NAME'];
+  if (!SRV) throw new ErrorEx('Forbidden', 'SRV_NAME invalid', 403);
   const port = process.env[`${SRV}_SRV_SERVICE_PORT`] || 8000;
   const salt = process.env['JWT_SALT'];
   const dburl = process.env['MONGO_URL'];

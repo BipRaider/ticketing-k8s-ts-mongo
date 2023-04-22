@@ -56,6 +56,12 @@ kubectl describe service $client
 kubectl describe deployment $client-depl
 echo [-----------------------------------------]
 
+nats=nats
+echo [------------Check $nats----------------]
+kubectl describe service $nats
+kubectl describe deployment $nats-depl
+echo [-----------------------------------------]
+
 echo [---Show running and stopped containers---]
 docker ps -a
 

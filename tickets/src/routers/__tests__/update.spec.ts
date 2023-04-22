@@ -1,7 +1,7 @@
 import { describe, test, expect } from '@jest/globals';
 import { Types } from 'mongoose';
 
-import { query, ResErr, routerUrl, createCookie, ResOK } from '../../test/utils';
+import { query, ResErr, routerUrl, createCookie, ResOK, createMongoId } from '../../test/utils';
 
 const ticketsCreate = { title: 'first ticket', price: 100 };
 const ticketsUpdate = { title: 'update ticket', price: 300 };
@@ -26,14 +26,18 @@ describe('[Update]:', () => {
       ResErr(res, 400, 'Invalid credentials');
     });
     test('[404] ticket is not exist', async () => {
-      const id = new Types.ObjectId().toHexString();
+      const id = createMongoId();
       const { cookie } = await createCookie();
       const res = await query(routerUrl.update(id), 'put', ticketsCreate, '', cookie);
       ResErr(res, 404, 'Ticket is not exist');
     });
     test('[401] the user is not own the ticket:', async () => {
-      //  const res = await query(routerUrl.update('s'), 'put', ticketsCreate);
-      //  ResErr(res, 401);
+      const userId = createMongoId();
+      const { cookie } = await createCookie({ id: userId, email: 'test@test.test' });
+      const { id } = await getIdTicket();
+      const res = await query(routerUrl.update(id), 'put', ticketsUpdate, '', cookie);
+
+      ResErr(res, 401);
     });
     test('[400] the user is provides an missing price :', async () => {
       const { id, cookie } = await getIdTicket();
@@ -69,7 +73,7 @@ describe('[Update]:', () => {
   });
   describe('[OK]:', () => {
     let ticket: any = {};
-    test('[200] successful update:', async () => {
+    test('[200] update the ticket successfully:', async () => {
       const { id, cookie } = await getIdTicket();
 
       const res = await query(routerUrl.update(id), 'put', ticketsUpdate, '', cookie);
@@ -79,16 +83,16 @@ describe('[Update]:', () => {
       ticket = data;
     });
 
-    test('ticket is success:', () => {
+    test('returns the title valid, which is provided for the update:', () => {
       expect(ticket.title).toBe(ticketsUpdate.title);
     });
-    test('price is success:', () => {
+    test('returns the price valid, which is provided for the update:', () => {
       expect(ticket.price).toBe(ticketsUpdate.price);
     });
-    test('id is success:', () => {
+    test('returns correct id:', () => {
       expect(ticket.id).toBeDefined();
     });
-    test('userId is success:', () => {
+    test('returns correct userId:', () => {
       expect(ticket.userId).toBeDefined();
     });
   });

@@ -1,13 +1,12 @@
 import { describe, test, expect } from '@jest/globals';
-import { query, ResErr, ResOK, routerUrl, createCookie } from '../../test/utils';
-import { Types } from 'mongoose';
+import { query, ResErr, ResOK, routerUrl, createCookie, createMongoId } from '../../test/utils';
 
 const ticketsCreate = { title: 'first ticket', price: 100 };
 
 describe('[GET BY ID]:', () => {
   describe('[OK]:', () => {
     let ticket: any = {};
-    test('[200] successful create:', async () => {
+    test('[200] returns the ticket successfully:', async () => {
       const { cookie } = await createCookie();
       const ticketCreated = await query(routerUrl.create, 'post', ticketsCreate, '', cookie);
       const { data: ticketData } = ticketCreated.body;
@@ -20,16 +19,16 @@ describe('[GET BY ID]:', () => {
       ticket = data;
     });
 
-    test('ticket is success:', () => {
+    test('returns the title valid:', () => {
       expect(ticket.title).toBe(ticketsCreate.title);
     });
-    test('price is success:', () => {
+    test('returns the price valid:', () => {
       expect(ticket.price).toBe(ticketsCreate.price);
     });
-    test('id is success:', () => {
+    test('returns correct id:', () => {
       expect(ticket.id).toBeDefined();
     });
-    test('userId is success:', () => {
+    test('returns correct userId:', () => {
       expect(ticket.userId).toBeDefined();
     });
   });
@@ -45,7 +44,7 @@ describe('[GET BY ID]:', () => {
       ResErr(res, 400, 'Invalid credentials');
     });
     test('[404] ticket is not exist', async () => {
-      const id = new Types.ObjectId().toHexString();
+      const id = createMongoId();
       const { cookie } = await createCookie();
       const res = await query(routerUrl.getById(id), 'get', {}, '', cookie);
       ResErr(res, 404, 'Ticket is not exist');
