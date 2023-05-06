@@ -1,0 +1,30 @@
+{
+  "name": "@bipdev/contracts",
+  "version": "1.0.0",
+  "description": "Contracts for microservice events.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "tsc",
+    "up:version": "npm version patch",
+    "push": "npm publish",
+    "pub": "bash ./scripts/pub.sh"
+  },
+  "keywords": [],
+  "author": "BipRaider",
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "^8.0.3",
+    "prettier": "^2.8.8",
+    "rimraf": "^5.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  },
+  "engines": {
+    "node": ">=18.16.0"
+  }
+}
