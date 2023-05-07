@@ -1,6 +1,6 @@
 {
   "name": "@bipdev/contracts",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Contracts for microservice events.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -17,6 +17,9 @@
   "keywords": [],
   "author": "BipRaider",
   "license": "MIT",
+  "engines": {
+    "node": ">=18.16.0"
+  },
   "devDependencies": {
     "husky": "^8.0.3",
     "prettier": "^2.8.8",
@@ -24,10 +27,11 @@
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   },
-  "engines": {
-    "node": ">=18.16.0"
-  },
   "dependencies": {
+    "node-nats-streaming": "^0.3.2",
+    "tslib": "^2.5.0"
+  },
+  "peerDependencies": {
     "node-nats-streaming": "^0.3.2",
     "tslib": "^2.5.0"
   }
