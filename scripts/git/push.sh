@@ -5,10 +5,10 @@ git add .
 echo [ Git status ]
 git status
 
-echo [ Add a message to a commit? ]
+echo [ Add a message to a commit? "Updated: "]
 read commit
 
-echo [ Git commit ]
+echo [ Git commit as: "Updated: ${commit}"]
 git commit -m "Updated: ${commit}"
 
 echo ["Need to raise version? [y\n]"]

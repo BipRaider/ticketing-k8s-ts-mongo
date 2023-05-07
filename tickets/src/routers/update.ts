@@ -3,6 +3,7 @@ import { ErrorEx } from '@bipdev/common';
 
 import { TicketsUpdate } from '@src/interfaces';
 import { MongoService } from '@src/database';
+import { TicketUpdatePublisher, natsWrapper } from '@src/events';
 
 export const Update = async (
   req: Request<{ id: string }, unknown, TicketsUpdate>,
@@ -21,14 +22,16 @@ export const Update = async (
 
     const item = await DB.findByIdAndUpdate(id, { $set: { title, price } }, { new: true }).exec();
 
-    res.status(200).send({
-      data: {
-        title: item.title,
-        price: item.price,
-        userId: item.userId,
-        id: item.id,
-      },
-    });
+    const data = {
+      title: item.title,
+      price: item.price,
+      userId: item.userId,
+      id: item.id,
+    };
+
+    await new TicketUpdatePublisher(natsWrapper.client).publish(data);
+
+    res.status(200).send({ data });
   } catch (e) {
     next(e);
   }

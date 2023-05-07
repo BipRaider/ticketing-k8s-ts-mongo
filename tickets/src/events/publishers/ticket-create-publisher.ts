@@ -1,6 +1,5 @@
-import { Publisher } from '@bipdev/common';
-import { TicketCreatedEvent, Subjects } from '@bipdev/contracts';
+import { TicketCreatedEvent, Subjects, Publisher } from '@bipdev/contracts';
 
 export class TicketCreatePublisher extends Publisher<TicketCreatedEvent> {
-  override subject: Subjects.TicketCreated;
+  override subject: Subjects.TicketCreated = Subjects.TicketCreated;
 }
