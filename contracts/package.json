@@ -26,5 +26,9 @@
   },
   "engines": {
     "node": ">=18.16.0"
+  },
+  "dependencies": {
+    "node-nats-streaming": "^0.3.2",
+    "tslib": "^2.5.0"
   }
 }
