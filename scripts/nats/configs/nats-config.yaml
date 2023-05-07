@@ -1,0 +1,56 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nats-config
+data:
+  nats.conf: |
+    port: 4222
+    http: 8222
+    ping_interval: 30s
+
+    cluster {
+      port: 6222
+      no_advertise: true
+      listen: "0.0.0.0:6222"
+      routes [
+        "nats://nats-headless:6222",
+        "nats://nats-srv-02:6222",
+        "nats://nats-srv:6222"
+      ]
+      connect_retries: 30
+    }
+
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: nats-config
+# data:
+#   nats.conf: |-
+#     port: 4222
+#     http: 8222
+#     ping_interval: 30s
+
+#     cluster {
+#       port: 6222
+#       no_advertise: true
+#       name: "nats-cluster"
+#       routes [
+#         nats://nats-0.nats.default.svc:6222
+#         nats://nats-1.nats.default.svc:6222
+#         nats://nats-2.nats.default.svc:6222
+#       ]
+
+#       cluster_advertise: $CLUSTER_ADVERTISE
+#       connect_retries: 30
+#     }
+
+#     leafnodes {
+#       port: 7422,
+#       authorization {
+#         timeout: 3s
+#         users = [
+#           { user: "username", pass: "password" }
+#         ]
+#       }
+#     }

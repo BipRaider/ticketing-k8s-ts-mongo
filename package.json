@@ -6,15 +6,17 @@
   "main": "index.js",
   "scripts": {
     "dev": "skaffold dev",
-    "k:up": "bash ./sh/k8s/up.sh",
-    "nginx": "bash ./sh/k8s/nginx.sh",
-    "k:check": "bash ./sh/k8s/check.sh",
-    "k:apply": "bash ./sh/k8s/apply.sh",
-    "k:restart": "bash ./sh/k8s/restart.sh",
-    "k:delete": "bash ./sh/k8s/delete.sh",
-    "k:secret": "bash ./sh/k8s/secret.sh",
-    "d:clear": "bash ./sh/docker/clear.sh",
-    "d:build": "bash ./sh/docker/build.sh",
-    "kompose": "wsl kompose --file docker-compose.yml convert"
+    "k:up": "bash ./scripts/k8s/up.sh",
+    "nginx": "bash ./scripts/k8s/nginx.sh",
+    "k:check": "bash ./scripts/k8s/check.sh",
+    "k:apply": "bash ./scripts/k8s/apply.sh",
+    "k:restart": "bash ./scripts/k8s/restart.sh",
+    "k:delete": "bash ./scripts/k8s/delete.sh",
+    "k:delete:repl": "bash ./scripts/k8s/del_repl.sh",
+    "k:secret": "bash ./scripts/k8s/secret.sh",
+    "d:clear": "bash ./scripts/docker/clear.sh",
+    "d:build": "bash ./scripts/docker/build.sh",
+    "kompose": "wsl kompose --file docker-compose.yml convert",
+    "git": "bash ./scripts/git/push.sh"
   }
 }

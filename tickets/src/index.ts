@@ -2,6 +2,7 @@ import { ErrorEx } from '@bipdev/common';
 
 import { app } from './app';
 import { MongoService } from './database';
+import { natsWrapper } from './events';
 
 const start = async () => {
   const SRV = process.env['SRV_NAME'];
@@ -13,6 +14,10 @@ const start = async () => {
   console.log('Service start...');
 
   await new MongoService().connect();
+
+  await natsWrapper.connect('ticketing', 'abc', {
+    url: 'http://nats-srv:4222',
+  });
 
   app.listen(port, () => {
     console.log(`Listening on port ${port}!`);

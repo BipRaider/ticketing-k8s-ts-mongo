@@ -1,32 +1,44 @@
 #!/bin/sh
-nginx=ingress-nginx
+echo [-----------Info about cluster------------]
+kubectl cluster-info
 echo [-----------Check namespace---------------]
 kubectl get namespace
-echo [-----------Check Pods-$nginx-------------]
-kubectl get pods -n $nginx
+echo [-----------Check all--------------------]
+kubectl get all --all-namespaces
+echo [-----------Check hpa--------------------]
+kubectl get hpa
+echo [-------------------------------------]
+nginx=ingress-nginx
+# echo [-----------Check Pods-$nginx-------------]
+# kubectl get pods -n $nginx
 
-echo [------Check Deployments-$nginx-----------]
-kubectl get deployments -n $nginx
+# echo [------Check Deployments-$nginx-----------]
+# kubectl get deployments -n $nginx
 
-echo [-------Check Services-$nginx-------------]
-kubectl get services -n $nginx
+# echo [-------Check Services-$nginx-------------]
+# kubectl get services -n $nginx
 
-echo [------Check describe-$nginxginx----------]
+echo [------Check describe-$nginx----------]
 kubectl describe service -n $nginx
 
 echo [-----------------------------------------]
 echo [-----------Check Application-------------]
 echo [-----------------------------------------]
 
-echo [-----------Check Pods--------------------]
-kubectl get pods
 
-echo [-----------Check Deployments-------------]
-kubectl get deployments
+# echo [-----------Check Pods--------------------]
+# kubectl get pods
 
-echo [-----------Check Services----------------]
-kubectl get services
-echo [-----------------------------------------]
+# echo [-----------Check Deployments-------------]
+# kubectl get deployments
+
+# echo [-----------Check Services----------------]
+# kubectl get services
+# echo [-----------------------------------------]
+
+# echo [-----------Check Replicaset--------------]
+# kubectl get replicaset
+# echo [-----------------------------------------]
 
 auth=auth
 echo [-----------Check $auth-------------------]

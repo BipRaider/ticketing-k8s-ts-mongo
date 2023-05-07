@@ -28,3 +28,17 @@ spec:
       protocol: TCP
       port: 27017
       targetPort: 27017
+
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: tickets-mongo-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: tickets-mongo-depl
+  minReplicas: 1
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 50

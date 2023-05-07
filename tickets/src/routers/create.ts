@@ -3,6 +3,7 @@ import { ErrorEx } from '@bipdev/common';
 
 import { TicketsCreate } from '@src/interfaces';
 import { MongoService } from '@src/database';
+import { TicketCreatePublisher, natsWrapper } from '@src/events';
 
 export const Create = async (
   req: Request<unknown, unknown, TicketsCreate>,
@@ -17,14 +18,16 @@ export const Create = async (
     if (exist) throw new ErrorEx('Ticket exist', null, 400);
     const item = await DB.addition({ title, price, userId });
 
-    res.status(201).send({
-      data: {
-        title: item.title,
-        price: item.price,
-        userId: item.userId,
-        id: item.id,
-      },
-    });
+    const data = {
+      title: item.title,
+      price: item.price,
+      userId: item.userId,
+      id: item.id,
+    };
+
+    await new TicketCreatePublisher(natsWrapper.client).publish(data);
+
+    res.status(201).send({ data });
     return;
   } catch (e) {
     next(e);

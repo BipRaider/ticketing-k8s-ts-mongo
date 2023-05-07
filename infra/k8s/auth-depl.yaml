@@ -34,6 +34,7 @@ spec:
               value: 'mongodb://auth-mongo-srv:27017/auth'
             - name: SRV_NAME
               value: 'AUTH'
+
 ---
 apiVersion: v1
 kind: Service
@@ -47,3 +48,17 @@ spec:
       protocol: TCP
       port: 8000
       targetPort: 8000
+
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: auth-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: auth-depl
+  minReplicas: 1
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 50

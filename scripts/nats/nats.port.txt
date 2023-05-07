@@ -1,0 +1,10 @@
+kubectl get pods
+
+kubectl port-forward <name-nats-pod> 4222:4222
+
+kubectl port-forward <name-nats-pod> 8222:8222
+
+
+http://localhost:8222/
+
+http://localhost:8222/subsz?subs=1

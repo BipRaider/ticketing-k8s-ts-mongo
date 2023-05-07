@@ -16,3 +16,6 @@ kubectl rollout restart deployment client-depl
 
 echo [Restart nats]
 kubectl rollout restart deployment nats-depl
+
+echo [Delete all duplicates]
+npm run d:clear

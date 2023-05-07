@@ -8,6 +8,7 @@ const start = async () => {
   const port = process.env[`${SRV}_SRV_SERVICE_PORT`] || 8000;
   const salt = process.env['JWT_SALT'];
   const dburl = process.env['MONGO_URL'];
+
   if (!salt && !dburl) throw new ErrorEx('Forbidden', null, 403);
   console.log('Service start...');
 
