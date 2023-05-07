@@ -1,18 +1,27 @@
 #!/bin/sh
-echo [Git add ]
+echo [ Git add ]
 git add .
 
-echo "Add a message to a commit?"
+echo [ Git status ]
+git status
+
+echo [ Add a message to a commit? ]
 read namespace
+echo [ Git commit ]
+git commit -m "Updated: ${namespace}"
 
-echo [Git commit]
-git commit -m "${namespace}"
+echo "Need to raise version? [y\n]"
+read version
+if [ "${version}" == "y" ]; then
+  npm version patch
+fi
 
-echo [Up version package]
-npm version patch
+echo "Make git push [y\n]"
+read push
+if [ "${push}" == "y" ]; then
+  git push
+fi
 
-echo [Git push]
-git push
 
 
 
