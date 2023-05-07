@@ -6,17 +6,18 @@ echo [ Git status ]
 git status
 
 echo [ Add a message to a commit? ]
-read namespace
-echo [ Git commit ]
-git commit -m "Updated: ${namespace}"
+read commit
 
-echo "Need to raise version? [y\n]"
+echo [ Git commit ]
+git commit -m "Updated: ${commit}"
+
+echo ["Need to raise version? [y\n]"]
 read version
 if [ "${version}" == "y" ]; then
   npm version patch
 fi
 
-echo "Make git push [y\n]"
+echo ["Make git push?[y\n]"]
 read push
 if [ "${push}" == "y" ]; then
   git push

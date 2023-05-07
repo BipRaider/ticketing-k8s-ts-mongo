@@ -15,9 +15,8 @@ const start = async () => {
 
   await new MongoService().connect();
 
-  await natsWrapper.connect('ticketing', 'abc', {
-    url: 'http://nats-srv:4222',
-  });
+  await natsWrapper.connect('ticketing', 'ticketServer', { url: 'http://nats-srv:4222' });
+  natsWrapper.closeEvent();
 
   app.listen(port, () => {
     console.log(`Listening on port ${port}!`);
