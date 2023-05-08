@@ -1,3 +1,4 @@
+import { ErrorEx } from '@bipdev/common';
 import nats, { Stan } from 'node-nats-streaming';
 
 class NatsWrapper {
@@ -13,6 +14,10 @@ class NatsWrapper {
   }
 
   connect = async (clusterID: string, clientID: string, opts?: nats.StanOptions): Promise<void> => {
+    if (!clusterID) throw new ErrorEx('Nats clasterId must be defined', 'Nats clasterId must be defined', 403);
+    if (!clientID) throw new ErrorEx('Nats cliendId must be defined', 'Nats cliendId must be defined', 403);
+    if (!opts.url) throw new ErrorEx('Nats url must be defined', 'Nats url must be defined', 403);
+
     this._client = nats.connect(clusterID, clientID, opts);
 
     return await new Promise<void>((resolve, reject) => {
