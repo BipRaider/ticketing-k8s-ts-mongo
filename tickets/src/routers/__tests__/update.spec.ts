@@ -1,6 +1,7 @@
-import { describe, test, expect, jest } from '@jest/globals';
+import { describe, test, expect } from '@jest/globals';
 
 import { query, ResErr, routerUrl, createCookie, ResOK, createMongoId } from '../../test/utils';
+import { natsWrapper } from '../../events/nats-wrapper';
 
 const ticketsCreate = { title: 'first ticket', price: 100 };
 const ticketsUpdate = { title: 'update ticket', price: 300 };
@@ -93,6 +94,14 @@ describe('[Update]:', () => {
     });
     test('returns correct userId:', () => {
       expect(ticket.userId).toBeDefined();
+    });
+
+    test('[200] Check publisher an event :', async () => {
+      const { id, cookie } = await getIdTicket();
+      const res = await query(routerUrl.update(id), 'put', ticketsUpdate, '', cookie);
+      ResOK(res, 200);
+
+      expect(natsWrapper.client.publish).toHaveBeenCalled();
     });
   });
 });
