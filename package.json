@@ -1,6 +1,6 @@
 {
   "name": "ticketing",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "BipRaider",
   "description": "k8s microservice",
   "main": "index.js",
