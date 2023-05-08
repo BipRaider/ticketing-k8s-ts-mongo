@@ -62,6 +62,18 @@ kubectl describe service $tickets-mongo
 kubectl describe deployment $tickets-mongo-depl
 echo [-----------------------------------------]
 
+orders=orders
+echo [-----------Check $orders----------------]
+kubectl describe service $orders
+kubectl describe deployment $orders-depl
+echo [-----------------------------------------]
+
+echo [-----------Check $orders-mongo----------]
+kubectl describe service $orders-mongo
+kubectl describe deployment $orders-mongo-depl
+echo [-----------------------------------------]
+
+
 client=client
 echo [------------Check $client----------------]
 kubectl describe service $client

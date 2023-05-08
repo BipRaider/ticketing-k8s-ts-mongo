@@ -3,6 +3,8 @@ docker=bipus
 auth=auth
 client=client
 tickets=tickets
+orders=orders
+
 
 echo ["Need to build Auth server? [y\n]"]
 read authBuild
@@ -31,6 +33,16 @@ if [ "${ticketBuild}" == "y" ]; then
 
   echo [Push the $tickets latest]:
   docker push $docker/$tickets
+fi
+
+echo ["Need to build Order server? [y\n]"]
+read orderBuild
+if [ "${orderBuild}" == "y" ]; then
+  echo [Build the $orders latest]:
+  docker build -t $docker/$orders ./$orders
+
+  echo [Push the $orders latest]:
+  docker push $docker/$orders
 fi
 
 echo [List all images]:
