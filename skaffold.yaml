@@ -6,6 +6,8 @@ manifests:
 build:
   local:
     push: false
+  tagPolicy:
+    sha256: {}
   artifacts:
     - image: bipus/client
       context: client

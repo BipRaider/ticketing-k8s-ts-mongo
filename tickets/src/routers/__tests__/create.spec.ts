@@ -1,4 +1,4 @@
-import { describe, test, expect } from '@jest/globals';
+import { describe, test, expect, jest } from '@jest/globals';
 import { query, ResErr, ResOK, routerUrl, createCookie } from '../../test/utils';
 
 const ticketsCreate = { title: 'first ticket', price: 100 };

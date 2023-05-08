@@ -29,7 +29,7 @@ export const Update = async (
       id: item.id,
     };
 
-    await new TicketUpdatePublisher(natsWrapper.client).publish(data);
+    void new TicketUpdatePublisher(natsWrapper.client).publish(data);
 
     res.status(200).send({ data });
   } catch (e) {
