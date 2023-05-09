@@ -17,7 +17,7 @@ export const createOrder = async (
     const DB = new MongoService();
 
     const ticket = await DB.tickets.findById(ticketId);
-    if (ticket) throw new ErrorEx('Ticket exist', null, 400);
+    if (!ticket) throw new ErrorEx('Ticket is not exist', null, 404);
 
     const isReserved = await ticket.isReserved();
     if (isReserved) throw new ErrorEx('Ticket is already reserved.', null, 400);
@@ -35,7 +35,6 @@ export const createOrder = async (
     };
 
     res.status(201).send({ data });
-    return;
   } catch (e) {
     next(e);
   }

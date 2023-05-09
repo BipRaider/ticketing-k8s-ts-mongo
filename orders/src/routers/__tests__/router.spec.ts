@@ -20,8 +20,8 @@ describe('[Router]:', () => {
     const res = await query(url(), 'post', {});
     StatusIsNot(res, 404);
   });
-  test(`[PUT]: Page ${url()} found.`, async () => {
-    const res = await query(url("/some_id'"), 'put', {});
+  test(`[DELETE]: Page ${url()} found.`, async () => {
+    const res = await query(url("/some_id'"), 'delete', {});
     StatusIsNot(res, 404);
   });
 });

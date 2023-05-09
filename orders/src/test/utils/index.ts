@@ -3,13 +3,13 @@ export * from './server';
 export * from './mongo';
 
 export const url = (router?: any): string => {
-  if (router) return `/api/v1/tickets${router}`;
-  return '/api/v1/tickets';
+  if (router) return `/api/v1/orders${router}`;
+  return '/api/v1/orders';
 };
 
 export const routerUrl = {
   create: url(),
-  update: (id: any): string => `${url()}/${id}`,
+  delete: (id: any): string => `${url()}/${id}`,
   getAll: url(),
   getById: (id: any): string => `${url()}/${id}`,
 };
