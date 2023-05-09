@@ -1,32 +1,38 @@
 import { NextFunction, Request, Response } from 'express';
 import { ErrorEx } from '@bipdev/common';
 
-import { OrdersCreate } from '@src/interfaces';
 import { MongoService } from '@src/database';
-// import { TicketCreatePublisher, natsWrapper } from '@src/events';
+import { OrdersStatus } from '@bipdev/contracts';
+
+const EXPIRATION_WINDOW_SECOND = 15 * 60;
 
 export const createOrder = async (
-  req: Request<unknown, unknown, OrdersCreate>,
+  req: Request<unknown, unknown, { ticketId: string }>,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const DB = new MongoService().orders;
-    const { status, expiresAt, ticket } = req.body;
+    const { ticketId } = req.body;
     const userId = req.user.id;
-    const exist = await DB.findOne({ status }).exec();
-    if (exist) throw new ErrorEx('Ticket exist', null, 400);
-    const item = await DB.addition({ status, expiresAt, userId, ticket });
+    const DB = new MongoService();
+
+    const ticket = await DB.tickets.findById(ticketId);
+    if (ticket) throw new ErrorEx('Ticket exist', null, 400);
+
+    const isReserved = await ticket.isReserved();
+    if (isReserved) throw new ErrorEx('Ticket is already reserved.', null, 400);
+
+    const expiresAt = new Date();
+    expiresAt.setSeconds(expiresAt.getSeconds() + EXPIRATION_WINDOW_SECOND);
+    const order = await DB.orders.addition({ status: OrdersStatus.Created, expiresAt, userId, ticket });
 
     const data = {
-      status: item.status,
-      expiresAt: item.expiresAt,
-      userId: item.userId,
-      ticket: item.ticket,
-      id: item.id,
+      status: order.status,
+      expiresAt: order.expiresAt,
+      userId: order.userId,
+      ticket: order.ticket,
+      id: order.id,
     };
-
-    // await new TicketCreatePublisher(natsWrapper.client).publish(data);
 
     res.status(201).send({ data });
     return;

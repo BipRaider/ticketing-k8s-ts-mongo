@@ -1,16 +1,22 @@
 import { Schema, model } from 'mongoose';
+import { OrdersStatus } from '@bipdev/contracts';
 
 import { DB_Module } from '@src/database';
 import { IOrdersAttr, IOrdersModel, IOrdersSchema, TOrdersInstance } from '@src/interfaces';
 
 const OrdersSchema = new Schema<IOrdersSchema, IOrdersModel>(
   {
-    status: { type: String, required: true },
+    status: {
+      type: String,
+      enum: Object.values(OrdersStatus),
+      required: true,
+      default: OrdersStatus.Created,
+    },
     userId: { type: String, required: true },
     expiresAt: { type: Schema.Types.Date },
     ticket: {
       type: Schema.Types.ObjectId,
-      ref: 'Ticket',
+      ref: DB_Module.TICKET,
     },
   },
   {
