@@ -35,3 +35,12 @@ build:
         manual:
           - src: 'src/**/*'
             dest: .
+
+    - image: bipus/orders
+      context: orders
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*'
+            dest: .

@@ -2,7 +2,7 @@ import express, { Request } from 'express';
 import { json } from 'body-parser';
 import { authHandler, errorHandler, errorMiddleware, sessionHandler } from '@bipdev/common';
 
-import TicketRouter from './routers';
+import orderRouter from './routers';
 
 const app = express();
 app.use((req: Request, _res, next) => {
@@ -16,7 +16,7 @@ app.set('trust proxy', true); // traffic is being proximate to our application t
 
 app.use(json());
 app.use(sessionHandler());
-app.use('/api/v1/orders', authHandler, TicketRouter);
+app.use('/api/v1/orders', authHandler, orderRouter);
 app.use(errorMiddleware);
 app.use(errorHandler);
 

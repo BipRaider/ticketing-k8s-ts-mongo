@@ -3,7 +3,6 @@
 # dependencies
 node_modules
 common
-contracts
 nats-test
 /.pnp
 .pnp.js

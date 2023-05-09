@@ -1,20 +1,20 @@
 import mongoose, { Connection } from 'mongoose';
 
-import { ITicketsModel } from '@src/interfaces';
-import { TicketsModel } from '@src/model';
+import { IOrdersModel } from '@src/interfaces';
+import { OrdersModel } from '@src/model';
 
 export class MongoService {
   private client: typeof mongoose;
   private db: Connection;
   private url: string;
 
-  private _tickets: ITicketsModel;
+  private _orders: IOrdersModel;
 
   constructor() {
     this.client = mongoose;
     this.url = process.env['MONGO_URL'];
 
-    this._tickets = TicketsModel;
+    this._orders = OrdersModel;
   }
   /*** Connect to the `mongodb` database */
   async connect(): Promise<void> {
@@ -54,8 +54,8 @@ export class MongoService {
   async disconnect(): Promise<void> {
     await this.client.disconnect();
   }
-  /** Works with `TicketsModel` from mongodb database */
-  get tickets(): ITicketsModel {
-    return this._tickets;
+  /** Works with `OrdersModel` from mongodb database */
+  get orders(): IOrdersModel {
+    return this._orders;
   }
 }

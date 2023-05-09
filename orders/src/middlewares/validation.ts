@@ -21,10 +21,18 @@ export const validation = (req: Request, _res: Response, next: NextFunction) => 
     );
   }
 
-  if (req?.user?.id && !isObjectIdOrHexString(req?.user?.id)) {
+  if (req?.user?.id && !isObjectIdOrHexString(req.user.id)) {
     throw new ErrorEx(
       'Invalid credentials',
       [{ param: 'userId', msg: 'Is not ObjectId', location: 'body', value: req.body.userId }],
+      400,
+    );
+  }
+
+  if (req?.body?.ticketId && !isObjectIdOrHexString(req.body.ticketId)) {
+    throw new ErrorEx(
+      'Invalid credentials',
+      [{ param: 'ticketId', msg: 'Is not ObjectId', location: 'body', value: req?.body?.ticketId }],
       400,
     );
   }

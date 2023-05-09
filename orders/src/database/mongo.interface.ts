@@ -1,6 +1,6 @@
 export enum DB_Module {
-  TICKET = 'ticket',
-  TICKETS = 'tickets',
+  ORDER = 'order',
+  ORDERS = 'orders',
 }
 
 /**
