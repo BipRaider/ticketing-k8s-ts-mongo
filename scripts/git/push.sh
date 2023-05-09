@@ -5,13 +5,14 @@ git add .
 echo [ Git status ]
 git status
 
-echo [ Add a message to a commit? "Updated: "]
+echo [ Add a message to a commit?]
 read commit
 
-echo [ Git commit as: "${commit}"]
 if [ "${commit}" ]; then
+echo [ Git commit as: "${commit}"]
   git commit -m "${commit}"
 else
+echo [ Git commit as: "update"]
   git commit -m "update"
 fi
 
