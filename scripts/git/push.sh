@@ -20,9 +20,9 @@ fi
 
 echo ["Need to change commit? [y\n]"]
 read commitChange
-rechange="y"
+rechange=""
 
-while [ $rechange == "no"]; do
+while read [ rechange ]; do
   echo ["Enter a new commit"]
   read new_commit
   echo [ Git commit as: "$new_commit"]
