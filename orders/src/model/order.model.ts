@@ -31,7 +31,7 @@ const OrdersSchema = new Schema<IOrdersSchema, IOrdersModel>(
   },
 );
 
-OrdersSchema.statics['addition'] = async function (date: IOrdersAttr): Promise<TOrdersInstance> {
+OrdersSchema.statics.addition = async (date: IOrdersAttr): Promise<TOrdersInstance> => {
   const item: TOrdersInstance = new OrdersModel({
     status: date.status,
     expiresAt: date.expiresAt,

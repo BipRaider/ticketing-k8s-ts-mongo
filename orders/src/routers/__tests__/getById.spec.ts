@@ -1,50 +1,95 @@
 import { describe, test, expect } from '@jest/globals';
 import { query, ResErr, ResOK, routerUrl, createCookie, createMongoId } from '../../test/utils';
+import { OrdersStatus } from '@bipdev/contracts';
 
-const ticketsCreate = { title: 'first ticket', price: 100 };
+import { MongoService } from '../../database';
+
+const db: MongoService = new MongoService();
+
+const ticketCreate = { title: 'concert', price: 10 };
 
 describe('[GET BY ID]:', () => {
-  // describe('[OK]:', () => {
-  //   let ticket: any = {};
-  //   test('[200] returns the ticket successfully:', async () => {
-  //     const { cookie } = await createCookie();
-  //     const ticketCreated = await query(routerUrl.create, 'post', ticketsCreate, '', cookie);
-  //     const { data: ticketData } = ticketCreated.body;
-  //     ResOK(ticketCreated, 201);
-  //     const res = await query(routerUrl.getById(ticketData.id), 'get', ticketsCreate, '', cookie);
-  //     ResOK(res, 200);
-  //     const { body } = res;
-  //     const { data } = body;
-  //     ticket = data;
-  //   });
-  //   test('returns the title valid:', () => {
-  //     expect(ticket.title).toBe(ticketsCreate.title);
-  //   });
-  //   test('returns the price valid:', () => {
-  //     expect(ticket.price).toBe(ticketsCreate.price);
-  //   });
-  //   test('returns correct id:', () => {
-  //     expect(ticket.id).toBeDefined();
-  //   });
-  //   test('returns correct userId:', () => {
-  //     expect(ticket.userId).toBeDefined();
-  //   });
-  // });
-  // describe('[ERROR]:', () => {
-  //   test('[401] user is unauthorized:', async () => {
-  //     const res = await query(routerUrl.getById('s'), 'get', {});
-  //     ResErr(res, 401);
-  //   });
-  //   test('[400] id is invalid:', async () => {
-  //     const { cookie } = await createCookie();
-  //     const res = await query(routerUrl.getById('qwertyuiopas'), 'get', {}, '', cookie);
-  //     ResErr(res, 400, 'Invalid credentials');
-  //   });
-  //   test('[404] ticket is not exist', async () => {
-  //     const id = createMongoId();
-  //     const { cookie } = await createCookie();
-  //     const res = await query(routerUrl.getById(id), 'get', {}, '', cookie);
-  //     ResErr(res, 404, 'Ticket is not exist');
-  //   });
-  // });
+  // test.todo('Need an implementation works of the getById func');
+  describe('[OK]:', () => {
+    let order: any = {};
+    let id: string = createMongoId() as string;
+    let ticketId: string = '';
+
+    test('[200] create the order and got one of the order by id:', async () => {
+      const ticket = await db.tickets.addition(ticketCreate);
+      ticketId = ticket.id;
+
+      const { cookie } = await createCookie({ id, email: 'test@test.test' });
+      const existOrder = await query(routerUrl.create, 'post', { ticketId: ticket.id }, '', cookie);
+
+      const { body: bodyCreate } = existOrder;
+      const { data: dataCreate } = bodyCreate;
+
+      const res = await query(routerUrl.getById(dataCreate.id), 'get', {}, '', cookie);
+
+      ResOK(res, 200);
+
+      const { body } = res;
+      const { data } = body;
+      order = data;
+    });
+    test('returns the status valid:', () => {
+      expect(order.status).toBeDefined();
+      expect(order.status).toEqual(OrdersStatus.Created);
+    });
+    test('returns the expiresAt valid:', () => {
+      expect(order.expiresAt).toBeDefined();
+    });
+    test('returns correct id:', () => {
+      expect(order.id).toBeDefined();
+    });
+    test('returns correct userId:', () => {
+      expect(order.userId).toBeDefined();
+      expect(order.userId).toEqual(id);
+    });
+    test('returns the ticket valid:', () => {
+      expect(order.ticket).toBeDefined();
+      expect(order.ticket.id).toEqual(ticketId);
+    });
+    test('returns the ticket.title valid:', () => {
+      expect(order.ticket.title).toEqual(ticketCreate.title);
+    });
+    test('returns the ticket.price valid:', () => {
+      expect(order.ticket.price).toEqual(ticketCreate.price);
+    });
+  });
+  describe('[ERROR]:', () => {
+    test('[401] The user is unauthorized:', async () => {
+      const res = await query(routerUrl.getById('s'), 'get', {});
+      ResErr(res, 401);
+    });
+    test('[400] The order id is invalid:', async () => {
+      const { cookie } = await createCookie();
+      const res = await query(routerUrl.getById('qwertyuiopas'), 'get', {}, '', cookie);
+      ResErr(res, 400, 'Invalid credentials');
+    });
+    test('[404] the order is not exist', async () => {
+      const id = createMongoId();
+      const { cookie } = await createCookie();
+      const res = await query(routerUrl.getById(id), 'get', {}, '', cookie);
+      ResErr(res, 404, 'The Order is not exist');
+    });
+
+    test('[401] If the order does not belong to the user:', async () => {
+      const ticket = await db.tickets.addition(ticketCreate);
+      let id: string = createMongoId() as string;
+
+      const { cookie } = await createCookie({ id, email: 'test@test.test' });
+      const existOrder = await query(routerUrl.create, 'post', { ticketId: ticket.id }, '', cookie);
+      const { body: bodyCreate } = existOrder;
+      const { data: dataCreate } = bodyCreate;
+
+      let idOtherUser: string = createMongoId() as string;
+      const { cookie: cookieOtherUser } = await createCookie({ idOtherUser, email: 'test1@test.test' });
+
+      const res = await query(routerUrl.getById(dataCreate.id), 'get', {}, '', cookieOtherUser);
+
+      ResErr(res, 401, 'Unauthorized');
+    });
+  });
 });

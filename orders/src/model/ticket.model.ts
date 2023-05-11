@@ -21,13 +21,12 @@ const TicketsSchema = new Schema<ITicketsSchema, ITicketsModel>(
   },
 );
 
-TicketsSchema.statics['addition'] = async function (date: ITicketsAttr): Promise<TTicketsInstance> {
+TicketsSchema.statics.addition = async (date: ITicketsAttr): Promise<TTicketsInstance> => {
   const item: TTicketsInstance = new TicketsModel({ title: date.title, price: date.price });
-
   return await item.save();
 };
 
-TicketsSchema.methods['isReserved'] = async function (): Promise<boolean> {
+TicketsSchema.methods.isReserved = async function (): Promise<boolean> {
   const DB = new MongoService().orders;
   const existingOrder = await DB.findOne({
     ticket: this,

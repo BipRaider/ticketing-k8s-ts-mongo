@@ -27,7 +27,7 @@ export const StatusIsNot = (res: any, status: number) => {
   expect(statusCode).not.toEqual(status);
 };
 
-export const ResOK = (res: any, status: 200 | 201 | 301, st?: number | string) => {
+export const ResOK = (res: any, status: 200 | 201 | 301 | 204 | 203, st?: number | string) => {
   const { statusCode, body } = res;
   const { data, error } = body;
 

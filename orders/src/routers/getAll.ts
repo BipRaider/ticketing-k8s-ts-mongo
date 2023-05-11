@@ -1,11 +1,15 @@
 import { Request, Response } from 'express';
 
-import { MongoService } from '@src/database';
+import { DB_Module, MongoService } from '@src/database';
 
-export const getAll = async (_req: Request<{ id: string }>, res: Response): Promise<void> => {
+export const getAll = async (req: Request, res: Response): Promise<void> => {
   const DB = new MongoService().orders;
-
-  const items = await DB.find().exec();
+  const userId = req.user.id;
+  const items = await DB.find({
+    userId,
+  })
+    .populate(DB_Module.TICKET)
+    .exec();
 
   res.status(200).send({
     data: items.map(item => {

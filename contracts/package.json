@@ -1,6 +1,6 @@
 {
   "name": "@bipdev/contracts",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Contracts for microservice events.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
