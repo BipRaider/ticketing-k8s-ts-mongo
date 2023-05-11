@@ -31,6 +31,7 @@ while [ $rechange == "no"]; do
   if [ "${reCom}" =="y" ]; then
     rechange="no"
   else
+  echo ["Commit update"]
     git commit --amend "$new_commit"
   fi
 done
