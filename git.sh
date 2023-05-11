@@ -13,12 +13,12 @@ if [ "${commitChange}" == "y" ]; then
       read newCommit
       new_commit=$newCommit
       echo [ New commit: "$new_commit"]
-      echo ["Change commit? [y]"]
+      echo ["rechange commit? [y]"]
       read cond
       if [ "${cond}"]; then
         condition=$cond
       else
-        git commit --amend "$new_commit"
+        git commit --amend -m "$new_commit"
         condition="no"
       fi
   done
