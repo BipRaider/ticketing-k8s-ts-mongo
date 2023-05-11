@@ -16,6 +16,14 @@ echo [ Git commit as: "update"]
   git commit -m "update"
 fi
 
+echo ["Need to change commit? [y\n]"]
+read commitChange
+if [ "${commitChange}" == "y" ]; then
+echo ["Enter a new commit"]
+read new_commit
+  git commit --amend "$new_commit"
+fi
+
 
 echo ["Need to raise version? [y\n]"]
 read version
