@@ -6,12 +6,8 @@ export interface OrderCancelledEvent {
 
   data: {
     id: string;
-    userId: string;
-    status: OrdersStatus;
-    expiresAt: string;
     ticket: {
       id: string;
-      price: number;
     };
   };
 }
