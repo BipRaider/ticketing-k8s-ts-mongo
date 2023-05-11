@@ -54,7 +54,24 @@ describe('[Delete]:', () => {
       expect(order.ticket.id).toEqual(ticketId);
     });
 
-    test.todo('emits an order cancelled event.');
+    // test.todo('emits an order cancelled event.');
+    test('[204] Check publisher an event :', async () => {
+      const ticket = await db.tickets.addition(ticketCreate);
+      ticketId = ticket.id;
+
+      const { cookie } = await createCookie({ id, email: 'test@test.test' });
+      const existOrder = await query(routerUrl.create, 'post', { ticketId: ticket.id }, '', cookie);
+      ResOK(existOrder, 201);
+      const { body: bodyCreate } = existOrder;
+      const { data: dataCreate } = bodyCreate;
+
+      const del = await query(routerUrl.delete(dataCreate.id), 'delete', {}, '', cookie);
+      const { statusCode } = del;
+
+      expect(statusCode).toEqual(204);
+
+      expect(natsWrapper.client.publish).toHaveBeenCalled();
+    });
   });
   describe('[ERROR]:', () => {
     test('[401] The user is unauthorized:', async () => {

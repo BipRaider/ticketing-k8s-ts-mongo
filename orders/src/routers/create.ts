@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { ErrorEx } from '@bipdev/common';
 
-import { MongoService } from '@src/database';
 import { OrdersStatus } from '@bipdev/contracts';
+import { MongoService } from '@src/database';
+import { OrderCreatePublisher, natsWrapper } from '@src/events';
 
 const EXPIRATION_WINDOW_SECOND = 15 * 60;
 
@@ -33,6 +34,14 @@ export const createOrder = async (
       ticket: order.ticket,
       id: order.id,
     };
+
+    void new OrderCreatePublisher(natsWrapper.client).publish({
+      id: order.id,
+      userId: order.userId,
+      status: order.status,
+      expiresAt: order.expiresAt.toISOString(),
+      ticket: { id: ticket.id, price: ticket.price },
+    });
 
     res.status(201).send({ data });
   } catch (e) {

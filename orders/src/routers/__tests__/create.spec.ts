@@ -42,13 +42,14 @@ describe('[Create]:', () => {
     test('returns correct userId:', () => {
       expect(order.userId).toBeDefined();
     });
-    test.todo('emits an order created event');
-    // test('[201] Check publisher an event :', async () => {
-    //   const { cookie } = await createCookie();
-    //   const res = await query(routerUrl.create, 'post', ticketsCreate, '', cookie);
-    //   ResOK(res, 201);
-    //   expect(natsWrapper.client.publish).toHaveBeenCalled();
-    // });
+    // test.todo('emits an order created event');
+    test('[201] Check publisher an event :', async () => {
+      const ticket = await db.tickets.addition({ title: 'concert', price: 10 });
+      const { cookie } = await createCookie();
+      const res = await query(routerUrl.create, 'post', { ticketId: ticket.id }, '', cookie);
+      ResOK(res, 201);
+      expect(natsWrapper.client.publish).toHaveBeenCalled();
+    });
   });
   describe('[ERROR]:', () => {
     test('[401] user is unauthorized:', async () => {
