@@ -22,6 +22,7 @@ const start = async () => {
 
   await new MongoService().connect();
   await natsWrapper.connect(natsClusterID, natsClientID, { url: natsUrl });
+  natsWrapper.listeners();
   natsWrapper.closeEvent();
 
   app.listen(port, () => {

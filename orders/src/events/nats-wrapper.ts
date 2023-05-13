@@ -1,5 +1,7 @@
 import { ErrorEx } from '@bipdev/common';
 import nats, { Stan } from 'node-nats-streaming';
+import { TicketCreatedListenerEvent } from './listners';
+import { TicketUpdatedListenerEvent } from './listners/ticket-updated-listeners';
 
 class NatsWrapper {
   private _client?: Stan;
@@ -20,7 +22,7 @@ class NatsWrapper {
 
     this._client = nats.connect(clusterID, clientID, opts);
 
-    return await new Promise<void>((resolve, reject) => {
+    const listen = await new Promise<void>((resolve, reject) => {
       this.client.on('connect', () => {
         console.log('Connected to NATS');
         resolve();
@@ -30,6 +32,7 @@ class NatsWrapper {
         reject(err);
       });
     });
+    return listen;
   };
   /** Listening event of a close.*/
   public closeEvent = () => {
@@ -40,6 +43,11 @@ class NatsWrapper {
 
     process.on('SIGINT', () => this.client.close());
     process.on('SIGTERM', () => this.client.close());
+  };
+  /** Running the listeners */
+  public listeners = (): void => {
+    new TicketCreatedListenerEvent(this.client).listen();
+    new TicketUpdatedListenerEvent(this.client).listen();
   };
 }
 

@@ -28,7 +28,10 @@ describe('[Create]:', () => {
     test('returns correct userId:', () => {
       expect(ticket.userId).toBeDefined();
     });
-
+    test('returns the version 0:', () => {
+      expect(ticket.version).toBeDefined();
+      expect(ticket.version).toEqual(0);
+    });
     test('[201] Check publisher an event :', async () => {
       const { cookie } = await createCookie();
       const res = await query(routerUrl.create, 'post', ticketsCreate, '', cookie);

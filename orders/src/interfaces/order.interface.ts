@@ -14,6 +14,7 @@ export interface Orders extends IOrdersAttr {
 }
 
 export interface IOrdersSchema extends Document<ObjectId | string>, IOrdersAttr {
+  version: number;
   readonly createAt?: Date;
   readonly updateAt?: Date;
 }

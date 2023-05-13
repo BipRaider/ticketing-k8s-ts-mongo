@@ -13,6 +13,7 @@ export interface Tickets extends ITicketsAttr {
 export interface ITicketsSchema extends Document<ObjectId | string>, ITicketsAttr {
   readonly createAt?: Date;
   readonly updateAt?: Date;
+  version: number;
 }
 
 export type TicketsCreate = Omit<Tickets, 'id'>;

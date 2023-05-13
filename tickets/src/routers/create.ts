@@ -22,6 +22,7 @@ export const Create = async (
       title: item.title,
       price: item.price,
       userId: item.userId,
+      version: item.version,
       id: item.id,
     };
 

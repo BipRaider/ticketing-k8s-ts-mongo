@@ -96,6 +96,10 @@ describe('[Update]:', () => {
       expect(ticket.userId).toBeDefined();
     });
 
+    test('returns the version 1:', () => {
+      expect(ticket.version).toBeDefined();
+      expect(ticket.version).toEqual(1);
+    });
     test('[200] Check publisher an event :', async () => {
       const { id, cookie } = await getIdTicket();
       const res = await query(routerUrl.update(id), 'put', ticketsUpdate, '', cookie);

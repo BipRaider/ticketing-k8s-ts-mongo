@@ -21,7 +21,10 @@ export class MongoService {
   /*** Connect to the `mongodb` database */
   async connect(): Promise<void> {
     try {
-      await this.client.connect(this.url);
+      await this.client.connect(this.url, {
+        //https://mongoosejs.com/docs/guide.html#indexes
+        autoIndex: process.env['NODE_ENV'] === 'development',
+      });
 
       this.db = this.client.connection;
 

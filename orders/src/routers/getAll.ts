@@ -18,6 +18,7 @@ export const getAll = async (req: Request, res: Response): Promise<void> => {
         expiresAt: item.expiresAt,
         userId: item.userId,
         ticket: item.ticket,
+        version: item.version,
         id: item.id,
       };
     }),

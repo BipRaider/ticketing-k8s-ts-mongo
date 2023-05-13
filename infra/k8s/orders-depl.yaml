@@ -15,15 +15,15 @@ spec:
       containers:
         - name: orders
           image: bipus/orders
-          resources:
-            requests:
-              ephemeral-storage: '1Gi'
-              memory: '400Mi'
-              cpu: '500m'
-            limits:
-              ephemeral-storage: '2Gi'
-              memory: '400Mi'
-              cpu: '500m'
+          # resources:
+          #   requests:
+          #     ephemeral-storage: '1Gi'
+          #     memory: '400Mi'
+          #     cpu: '500m'
+          #   limits:
+          #     ephemeral-storage: '2Gi'
+          #     memory: '400Mi'
+          #     cpu: '500m'
           env:
             - name: JWT_SALT
               valueFrom:

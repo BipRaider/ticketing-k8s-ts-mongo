@@ -26,10 +26,11 @@ const OrdersSchema = new Schema<IOrdersSchema, IOrdersModel>(
         ret.id = ret._id;
         delete ret._id;
       },
-      versionKey: false,
     },
   },
 );
+
+OrdersSchema.set('versionKey', 'version');
 
 OrdersSchema.statics.addition = async (date: IOrdersAttr): Promise<TOrdersInstance> => {
   const item: TOrdersInstance = new OrdersModel({

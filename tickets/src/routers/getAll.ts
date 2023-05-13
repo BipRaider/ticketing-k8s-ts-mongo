@@ -14,6 +14,7 @@ export const getAll = async (_req: Request<{ id: string }>, res: Response): Prom
         title: item.title,
         userId: item.userId,
         price: item.price,
+        version: item.version,
       };
     }),
   });

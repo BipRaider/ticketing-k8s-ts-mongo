@@ -1,0 +1,2 @@
+kubectl get pods
+kubectl port-forward tickets-mongo-depl-cb4dc78cb-z2wjg 27017:27017
