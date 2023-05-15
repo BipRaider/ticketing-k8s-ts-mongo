@@ -1,5 +1,6 @@
 import { ErrorEx } from '@bipdev/common';
 import nats, { Stan } from 'node-nats-streaming';
+import { OrderCreatedListenerEvent, OrderCancelledListenerEvent } from './listners';
 
 class NatsWrapper {
   private _client?: Stan;
@@ -12,6 +13,12 @@ class NatsWrapper {
     }
     return this._client;
   }
+
+  public init = async (clusterID: string, clientID: string, opts?: nats.StanOptions) => {
+    await this.connect(clusterID, clientID, opts);
+    this.listeners();
+    this.closeEvent();
+  };
 
   connect = async (clusterID: string, clientID: string, opts?: nats.StanOptions): Promise<void> => {
     if (!clusterID) throw new ErrorEx('Nats clasterId must be defined', 'Nats clasterId must be defined', 403);
@@ -40,6 +47,11 @@ class NatsWrapper {
 
     process.on('SIGINT', () => this.client.close());
     process.on('SIGTERM', () => this.client.close());
+  };
+  /** Running the listeners */
+  public listeners = (): void => {
+    new OrderCreatedListenerEvent(this.client).listen();
+    new OrderCancelledListenerEvent(this.client).listen();
   };
 }
 

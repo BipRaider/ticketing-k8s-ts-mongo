@@ -21,8 +21,7 @@ const start = async () => {
   console.log('Service start...');
 
   await new MongoService().connect();
-  await natsWrapper.connect(natsClusterID, natsClientID, { url: natsUrl });
-  natsWrapper.closeEvent();
+  await natsWrapper.init(natsClusterID, natsClientID, { url: natsUrl });
 
   app.listen(port, () => {
     console.log(`Listening on port ${port}!`);

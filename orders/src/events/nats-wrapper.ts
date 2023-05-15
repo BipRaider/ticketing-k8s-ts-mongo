@@ -1,7 +1,6 @@
 import { ErrorEx } from '@bipdev/common';
 import nats, { Stan } from 'node-nats-streaming';
-import { TicketCreatedListenerEvent } from './listners';
-import { TicketUpdatedListenerEvent } from './listners/ticket-updated-listeners';
+import { TicketCreatedListenerEvent, TicketUpdatedListenerEvent } from './listners';
 
 class NatsWrapper {
   private _client?: Stan;
@@ -14,6 +13,12 @@ class NatsWrapper {
     }
     return this._client;
   }
+
+  public init = async (clusterID: string, clientID: string, opts?: nats.StanOptions) => {
+    await this.connect(clusterID, clientID, opts);
+    this.listeners();
+    this.closeEvent();
+  };
 
   connect = async (clusterID: string, clientID: string, opts?: nats.StanOptions): Promise<void> => {
     if (!clusterID) throw new ErrorEx('Nats clasterId must be defined', 'Nats clasterId must be defined', 403);

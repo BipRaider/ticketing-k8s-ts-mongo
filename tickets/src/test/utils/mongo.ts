@@ -28,4 +28,4 @@ export const dbDisconnect = async () => {
   } catch {}
 };
 
-export const createMongoId = (): string | ObjectId => new Types.ObjectId().toHexString();
+export const createMongoId = (): string => new Types.ObjectId().toHexString();
