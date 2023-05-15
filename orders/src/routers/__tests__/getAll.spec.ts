@@ -7,11 +7,11 @@ import { MongoService } from '../../database';
 
 const db: MongoService = new MongoService();
 
-const ticketCreate = { title: 'concert', price: 10 };
+const ticketCreate = { title: 'concert', price: 10, id: createMongoId() };
 const ticketCreates = [
-  { title: 'concert 1', price: 5 },
-  { title: 'concert 2', price: 15 },
-  { title: 'concert 3', price: 25 },
+  { title: 'concert 1', price: 5, id: createMongoId() },
+  { title: 'concert 2', price: 15, id: createMongoId() },
+  { title: 'concert 3', price: 25, id: createMongoId() },
 ];
 
 describe('[GET ALL]:', () => {
@@ -56,6 +56,9 @@ describe('[GET ALL]:', () => {
     });
     test('returns the ticket.price valid:', () => {
       expect(order.ticket.price).toEqual(ticketCreate.price);
+    });
+    test('returns the ticket.version valid:', () => {
+      expect(order.ticket.version).toEqual(0);
     });
 
     describe('Check several orders', () => {

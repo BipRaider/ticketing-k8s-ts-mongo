@@ -8,7 +8,7 @@ import { DB_Module, MongoService } from '../../database';
 
 const db: MongoService = new MongoService();
 
-const ticketCreate = { title: 'concert', price: 10 };
+const ticketCreate = { title: 'concert', price: 10, id: createMongoId() };
 
 describe('[Delete]:', () => {
   // test.todo('Need an implementation works of the Delete func');

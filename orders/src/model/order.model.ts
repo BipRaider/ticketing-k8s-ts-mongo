@@ -1,8 +1,11 @@
-import { Schema, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 import { OrdersStatus } from '@bipdev/contracts';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 import { DB_Module } from '@src/database';
 import { IOrdersAttr, IOrdersModel, IOrdersSchema, TOrdersInstance } from '@src/interfaces';
+
+mongoose.plugin(updateIfCurrentPlugin);
 
 const OrdersSchema = new Schema<IOrdersSchema, IOrdersModel>(
   {

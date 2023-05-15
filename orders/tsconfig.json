@@ -60,6 +60,7 @@
     "node_modules",
     "**/*.spec.ts",
     "**/*.test.ts",
-    "./src/**/__mocks__/**/*"
+    "./src/**/__mocks__/**/*",
+    "./src/**/__tests__/**/*"
   ],
 }

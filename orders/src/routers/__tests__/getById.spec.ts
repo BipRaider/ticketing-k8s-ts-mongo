@@ -6,7 +6,7 @@ import { MongoService } from '../../database';
 
 const db: MongoService = new MongoService();
 
-const ticketCreate = { title: 'concert', price: 10 };
+const ticketCreate = { title: 'concert', price: 10, id: createMongoId() };
 
 describe('[GET BY ID]:', () => {
   // test.todo('Need an implementation works of the getById func');
@@ -56,6 +56,9 @@ describe('[GET BY ID]:', () => {
     });
     test('returns the ticket.price valid:', () => {
       expect(order.ticket.price).toEqual(ticketCreate.price);
+    });
+    test('returns the ticket.version valid:', () => {
+      expect(order.ticket.version).toEqual(0);
     });
   });
   describe('[ERROR]:', () => {
