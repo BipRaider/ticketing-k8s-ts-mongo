@@ -12,11 +12,9 @@ const setup = async () => {
   // create an instance of the listener
   const listener = new OrderCancelledListenerEvent(natsWrapper.client);
 
-  const userId = createMongoId();
-  const ticketId = createMongoId();
   // create and save a ticket
+  const userId = createMongoId();
   const ticket = await TicketsModel.addition({
-    id: ticketId,
     title: 'new ticket',
     price: 111,
     userId,
@@ -24,10 +22,10 @@ const setup = async () => {
 
   // create a fake data event
   const data: OrderCancelledEvent['data'] = {
-    id: ticket.id,
+    id: createMongoId(),
     version: 1,
     ticket: {
-      id: '',
+      id: ticket.id,
     },
   };
 

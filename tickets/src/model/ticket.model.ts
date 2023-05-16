@@ -11,6 +11,7 @@ const TicketsSchema = new Schema<ITicketsSchema, ITicketsModel>(
     title: { type: String, required: true, unique: true },
     price: { type: Number, required: true },
     userId: { type: String, required: true },
+    orderId: { type: String },
   },
   {
     timestamps: { createdAt: 'createAt', updatedAt: 'updateAt' },
@@ -25,7 +26,11 @@ const TicketsSchema = new Schema<ITicketsSchema, ITicketsModel>(
 TicketsSchema.set('versionKey', 'version');
 
 TicketsSchema.statics['addition'] = async function (date: ITicketsAttr): Promise<TTicketsInstance> {
-  const item: TTicketsInstance = new TicketsModel({ title: date.title, price: date.price, userId: date.userId });
+  const item: TTicketsInstance = new TicketsModel({
+    title: date.title,
+    price: date.price,
+    userId: date.userId,
+  });
 
   return item.save();
 };

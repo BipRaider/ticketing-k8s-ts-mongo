@@ -11,16 +11,25 @@ import { natsWrapper } from '../../nats-wrapper';
 const setup = async () => {
   // create an instance of the listener
   const listener = new OrderCreatedListenerEvent(natsWrapper.client);
-  //create a fake data event
+
+  // create and save ticket
+  const userId = createMongoId();
+  const ticket = await TicketsModel.addition({
+    title: 'concert',
+    price: 100,
+    userId,
+  });
+
+  // create a fake data event
   const data: OrderCreatedEvent['data'] = {
     version: 0,
     id: createMongoId(),
-    userId: createMongoId(),
+    userId: userId,
     status: OrdersStatus.Created,
     expiresAt: '',
     ticket: {
-      id: '',
-      price: 0,
+      id: ticket.id,
+      price: ticket.price,
     },
   };
   //create a fake data object
@@ -36,21 +45,20 @@ const setup = async () => {
     getCrc32: jest.fn((): number => 32),
   };
 
-  return { listener, data, msg };
+  return { listener, data, msg, ticket, userId };
 };
 
 describe('[Order created listener]', () => {
-  // test.todo('created and saves a ticket');
-  test('created and saves a ticket', async () => {
+  test('sets the orderId  of the ticket', async () => {
     const { listener, data, msg } = await setup();
 
     // call the onMessage func with the data object + message object
     await listener.onMessage(data, msg);
 
-    // write assertions to make sure a ticket was created
-    const ticket = await TicketsModel.findById(data.id);
+    const ticket = await TicketsModel.findById(data.ticket.id);
 
     expect(ticket).toBeDefined();
+    expect(ticket.orderId).toEqual(data.id);
   });
   // test.todo('acks the message');
   test('acks the message', async () => {
