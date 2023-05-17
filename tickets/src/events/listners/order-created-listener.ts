@@ -1,6 +1,6 @@
 import { Message } from 'node-nats-streaming';
 import { OrderCreatedEvent, Subjects, Listener } from '@bipdev/contracts';
-import { TicketUpdatePublisher, natsWrapper } from '@src/events';
+import { TicketUpdatePublisher } from '@src/events';
 
 import { MongoService } from '@src/database';
 import { queueGroupName } from './queue-group-name';
@@ -20,15 +20,14 @@ export class OrderCreatedListenerEvent extends Listener<OrderCreatedEvent> {
 
     await ticket.save();
 
-    const updateData = {
+    void new TicketUpdatePublisher(this.client).publish({
       title: ticket.title,
       price: ticket.price,
-      userId: ticket.userId,
       version: ticket.version,
       id: ticket.id,
-    };
-
-    void new TicketUpdatePublisher(natsWrapper.client).publish(updateData);
+      userId: ticket.userId,
+      orderId: ticket.orderId,
+    });
 
     msg.ack();
   }

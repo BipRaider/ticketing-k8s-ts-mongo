@@ -3,6 +3,9 @@ import { describe, test, expect } from '@jest/globals';
 import { query, ResErr, routerUrl, createCookie, ResOK, createMongoId } from '../../test/utils';
 import { natsWrapper } from '../../events/nats-wrapper';
 
+import { TicketsModel } from '../../model';
+import { TTicketsInstance } from '../../interfaces';
+
 const ticketsCreate = { title: 'first ticket', price: 100 };
 const ticketsUpdate = { title: 'update ticket', price: 300 };
 
@@ -69,6 +72,15 @@ describe('[Update]:', () => {
       const { id, cookie } = await getIdTicket();
       const res = await query(routerUrl.update(id), 'put', { title: ticketsUpdate.title, price: 11111 }, '', cookie);
       ResErr(res, 400, 'Invalid credentials');
+    });
+    test('[400] Cannot edit the reserved ticket', async () => {
+      const { id, cookie } = await getIdTicket();
+      const ticket: TTicketsInstance = await TicketsModel.findById(id);
+      ticket.set({ orderId: id });
+      await ticket.save();
+      const res = await query(routerUrl.update(id), 'put', { title: ticketsUpdate.title, price: 111 }, '', cookie);
+
+      ResErr(res, 400, 'Cannot edit the reserved ticket');
     });
   });
   describe('[OK]:', () => {

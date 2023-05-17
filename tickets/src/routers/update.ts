@@ -18,6 +18,7 @@ export const Update = async (
     const exist = await DB.findById(id).exec();
 
     if (!exist) throw new ErrorEx('Ticket is not exist', null, 404);
+    if (exist.orderId) throw new ErrorEx('Cannot edit the reserved ticket', null, 400);
     if (exist.userId !== req?.user?.id) throw new ErrorEx('Unauthorized', null, 401);
 
     const item = await DB.findByIdAndUpdate(
