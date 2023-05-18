@@ -2,7 +2,7 @@ import nats, { Stan } from 'node-nats-streaming';
 
 import { ErrorEx } from '@bipdev/common';
 
-import { OrderCreatedListenerEvent, OrderCancelledListenerEvent } from './listners';
+import {} from './listners';
 
 class NatsWrapper {
   private _client?: Stan;
@@ -51,10 +51,7 @@ class NatsWrapper {
     process.on('SIGTERM', () => this.client.close());
   };
   /** Running the listeners */
-  public listeners = (): void => {
-    new OrderCreatedListenerEvent(this.client).listen();
-    new OrderCancelledListenerEvent(this.client).listen();
-  };
+  public listeners = (): void => {};
 }
 
 export const natsWrapper = new NatsWrapper();

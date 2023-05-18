@@ -4,6 +4,7 @@ auth=auth
 client=client
 tickets=tickets
 orders=orders
+expiration=expiration
 nats=nats
 
 
@@ -19,6 +20,9 @@ kubectl $del deployment $tickets-depl
 
 echo [$del $orders deployment]
 kubectl $del deployment $orders-depl
+
+echo [$del $expiration deployment]
+kubectl $del deployment $expiration-depl
 
 echo [$del $nats deployment]
 kubectl $del deployment $nats-depl
@@ -38,6 +42,9 @@ kubectl $del service $auth-srv
 
 echo [$del $tickets service]
 kubectl $del service $tickets-srv
+
+echo [$del $expiration service]
+kubectl $del service $expiration-srv
 
 echo [$del $orders service]
 kubectl $del service $orders-srv
@@ -60,28 +67,31 @@ echo [$del $client service]
 kubectl $del service $client-srv
 
 echo [--------hpa---------]
-echo [$del $auth service]
+echo [$del $auth hpa]
 kubectl $del hpa $auth-hpa
 
-echo [$del $tickets service]
+echo [$del $tickets hpa]
 kubectl $del hpa $tickets-hpa
 
-echo [$del $orders service]
+echo [$del $orders hpa]
 kubectl $del hpa $orders-hpa
 
-echo [$del $nats service]
+echo [$del $expiration hpa]
+kubectl $del hpa $expiration-hpa
+
+echo [$del $nats hpa]
 kubectl $del hpa $nats-hpa
 
-echo [$del $client service]
+echo [$del $client hpa]
 kubectl $del hpa $client-hpa
 
-echo [$del $auth service]
+echo [$del $auth hpa]
 kubectl $del hpa $auth-mongo-hpa
 
-echo [$del $tickets service]
+echo [$del $tickets hpa]
 kubectl $del hpa $tickets-mongo-hpa
 
-echo [$del $orders service]
+echo [$del $orders hpa]
 kubectl $del hpa $orders-mongo-hpa
 
 echo [--------Namesoace---------]

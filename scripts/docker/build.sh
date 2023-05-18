@@ -4,6 +4,7 @@ auth=auth
 client=client
 tickets=tickets
 orders=orders
+expiration=expiration
 
 
 echo ["Need to build Auth server? [y\n]"]
@@ -44,6 +45,17 @@ if [ "${orderBuild}" == "y" ]; then
   echo [Push the $orders latest]:
   docker push $docker/$orders
 fi
+
+echo ["Need to build Expiration server? [y\n]"]
+read expirationBuild
+if [ "${expirationBuild}" == "y" ]; then
+  echo [Build the $expiration latest]:
+  docker build -t $docker/$expiration ./$expiration
+
+  echo [Push the $expiration latest]:
+  docker push $docker/$expiration
+fi
+
 
 echo [List all images]:
 docker images --filter=reference="$docker/*"
