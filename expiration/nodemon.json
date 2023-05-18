@@ -1,0 +1,10 @@
+{
+  "verbose": true,
+  "ignore": ["src/**/*spec.ts"],
+  "watch": ["./src", "./views", "./client", "./app", "./apps"],
+  "exc": "ts,js,ejs",
+  "execMap": {
+    "ts": "node --inspect=0.0.0.0:9229 --nolazy -r ts-node/register -r tsconfig-paths/register"
+  },
+  "exec": "ts-node-dev --rs --poll --respawn -r tsconfig-paths/register ./src/index.ts"
+}
