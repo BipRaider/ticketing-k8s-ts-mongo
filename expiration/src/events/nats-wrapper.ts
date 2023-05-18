@@ -1,5 +1,7 @@
-import { ErrorEx } from '@bipdev/common';
 import nats, { Stan } from 'node-nats-streaming';
+
+import { ErrorEx } from '@bipdev/common';
+
 import { OrderCreatedListenerEvent, OrderCancelledListenerEvent } from './listners';
 
 class NatsWrapper {
