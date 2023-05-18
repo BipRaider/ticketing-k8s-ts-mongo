@@ -5,6 +5,7 @@ client=client
 tickets=tickets
 orders=orders
 expiration=expiration
+ER=expiration-redis
 nats=nats
 
 
@@ -23,6 +24,9 @@ kubectl $del deployment $orders-depl
 
 echo [$del $expiration deployment]
 kubectl $del deployment $expiration-depl
+
+echo [$del $ER deployment]
+kubectl $del deployment $ER-depl
 
 echo [$del $nats deployment]
 kubectl $del deployment $nats-depl
@@ -43,8 +47,8 @@ kubectl $del service $auth-srv
 echo [$del $tickets service]
 kubectl $del service $tickets-srv
 
-echo [$del $expiration service]
-kubectl $del service $expiration-srv
+echo [$del $ER service]
+kubectl $del service $ER-srv
 
 echo [$del $orders service]
 kubectl $del service $orders-srv
@@ -78,6 +82,9 @@ kubectl $del hpa $orders-hpa
 
 echo [$del $expiration hpa]
 kubectl $del hpa $expiration-hpa
+
+echo [$del $ER hpa]
+kubectl $del hpa $ER-hpa
 
 echo [$del $nats hpa]
 kubectl $del hpa $nats-hpa
