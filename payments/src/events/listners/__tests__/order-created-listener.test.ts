@@ -1,23 +1,27 @@
 import { describe, test, jest, expect } from '@jest/globals';
 import { Message } from 'node-nats-streaming';
-import { TicketCreatedEvent } from '@bipdev/contracts';
+import { OrderCreatedEvent, OrdersStatus } from '@bipdev/contracts';
 
 import { createMongoId } from '../../../test/utils';
 
-import { TicketsModel } from '../../../model';
-import { TicketCreatedListenerEvent } from '../ticket-created-listeners';
+import { OrdersModel } from '../../../model';
+import { OrderCreatedListenerEvent } from '../order-created-listener';
 import { natsWrapper } from '../../nats-wrapper';
 
 const setup = async () => {
   // create an instance of the listener
-  const listener = new TicketCreatedListenerEvent(natsWrapper.client);
+  const listener = new OrderCreatedListenerEvent(natsWrapper.client);
   //create a fake data event
-  const data: TicketCreatedEvent['data'] = {
+  const data: OrderCreatedEvent['data'] = {
     id: createMongoId(),
-    title: 'new ticket',
-    price: 111,
     userId: createMongoId(),
+    status: OrdersStatus.Created,
+    expiresAt: new Date().toISOString(),
     version: 0,
+    ticket: {
+      id: createMongoId(),
+      price: 111,
+    },
   };
   //create a fake data object
   const msg: Message = {
@@ -35,20 +39,22 @@ const setup = async () => {
   return { listener, data, msg };
 };
 
-describe('[Ticket created listener]', () => {
-  // test.todo('created and saves a ticket');
-  test('created and saves a ticket', async () => {
+describe('[Order created listener]', () => {
+  test('replicates the order info', async () => {
     const { listener, data, msg } = await setup();
 
     // call the onMessage func with the data object + message object
     await listener.onMessage(data, msg);
 
-    // write assertions to make sure a ticket was created
-    const ticket = await TicketsModel.findById(data.id);
+    // write assertions to make sure a order was created
+    const order = await OrdersModel.findById(data.id);
 
-    expect(ticket).toBeDefined();
-    expect(ticket.title).toEqual(data.title);
-    expect(ticket.price).toEqual(data.price);
+    expect(order).toBeDefined();
+    expect(order.id).toEqual(data.id);
+    expect(order.status).toEqual(data.status);
+    expect(order.userId).toEqual(data.userId);
+    expect(order.price).toEqual(data.ticket.price);
+    expect(order.version).toEqual(data.version);
   });
   // test.todo('acks the message');
   test('acks the message', async () => {

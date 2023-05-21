@@ -1,13 +1,15 @@
 #!/bin/sh
-echo [-----------Info about cluster------------]
+echo [-----------Info about cluster-----------]
 kubectl cluster-info
-echo [-----------Check namespace---------------]
+echo [-----------Check namespace--------------]
 kubectl get namespace
 echo [-----------Check all--------------------]
 kubectl get all --all-namespaces
 echo [-----------Check hpa--------------------]
 kubectl get hpa
-echo [-------------------------------------]
+echo [-----------Show secrets-----------------]
+kubectl get secrets
+echo [----------------------------------------]
 nginx=ingress-nginx
 # echo [-----------Check Pods-$nginx-------------]
 # kubectl get pods -n $nginx
@@ -88,6 +90,3 @@ echo [-----------------------------------------]
 
 echo [---Show running and stopped containers---]
 docker ps -a
-
-echo [Show secrets]
-kubectl get secrets

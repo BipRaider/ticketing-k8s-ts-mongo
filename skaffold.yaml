@@ -53,3 +53,12 @@ build:
         manual:
           - src: 'src/**/*'
             dest: .
+
+    - image: bipus/payments
+      context: payments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*'
+            dest: .

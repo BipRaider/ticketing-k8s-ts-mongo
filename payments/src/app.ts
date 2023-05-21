@@ -16,7 +16,7 @@ app.set('trust proxy', true); // traffic is being proximate to our application t
 
 app.use(json());
 app.use(sessionHandler());
-app.use('/api/v1/orders', authHandler, routers);
+app.use('/api/v1/payments', authHandler, routers);
 app.use(errorMiddleware);
 app.use(errorHandler);
 

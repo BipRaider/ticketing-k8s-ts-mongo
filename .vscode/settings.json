@@ -9,6 +9,7 @@
     "./apps",
     "./tickets",
     "./orders",
-    "./expiration"
+    "./expiration",
+    "./payments"
   ]
 }

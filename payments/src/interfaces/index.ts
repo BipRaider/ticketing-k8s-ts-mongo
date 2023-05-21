@@ -1,2 +1,1 @@
-export * from './order.interface';
-export * from './ticket.interface';
+export * from './orders.interface';

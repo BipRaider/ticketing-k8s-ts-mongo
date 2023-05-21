@@ -3,8 +3,8 @@ export * from './server';
 export * from './mongo';
 
 export const url = (router?: any): string => {
-  if (router) return `/api/v1/orders${router}`;
-  return '/api/v1/orders';
+  if (router) return `/api/v1/payments${router}`;
+  return '/api/v1/payments';
 };
 
 export const routerUrl = {
