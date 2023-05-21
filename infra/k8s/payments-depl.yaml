@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payments
+  template:
+    metadata:
+      labels:
+        app: payments
+    spec:
+      containers:
+        - name: payments
+          image: bipus/payments
+          # resources:
+          #   requests:
+          #     ephemeral-storage: '1Gi'
+          #     memory: '400Mi'
+          #     cpu: '500m'
+          #   limits:
+          #     ephemeral-storage: '2Gi'
+          #     memory: '400Mi'
+          #     cpu: '500m'
+          env:
+            - name: JWT_SALT
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_SALT
+            - name: SRV_NAME
+              value: 'PAYMENTS'
+            - name: MONGO_URL
+              value: 'mongodb://payments-mongo-srv:27017/payments'
+            - name: NATS_CLUSTER_ID
+              value: 'ticketing'
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: NATS_URL
+              value: 'http://nats-srv:4222'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payments-srv
+spec:
+  selector:
+    app: payments
+  ports:
+    - name: payments
+      protocol: TCP
+      port: 8000
+      targetPort: 8000
+
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: payments-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: payments-depl
+  minReplicas: 1
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 50
+# ---
+# apiVersion: policy/v1beta1
+# kind: PodDisruptionBudget
+# metadata:
+#   name: payments-pdb
+# spec:
+#   maxUnavailable: 50%
+#   selector:
+#     matchLabels:
+#       app: payments-app

@@ -10,9 +10,10 @@ nats-test
 # testing
 /coverage
 coverage
+test.sh
+
 # production
 /build
-
 
 # misc
 .DS_Store

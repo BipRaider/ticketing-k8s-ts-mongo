@@ -6,103 +6,52 @@ tickets=tickets
 orders=orders
 expiration=expiration
 ER=expiration-redis
+payments=payments
 nats=nats
 
+# List of configurations or secrets
+configList=""
+secretList="$jwt $nats"
 
-echo [--------Deployment---------]
-echo [$del $auth deployment]
-kubectl $del deployment $auth-depl
+# Lists of deployment
+eventsList="$ER $nats"
+databaseList="$auth $tickets $orders $payments"
+servicesList="$client $auth $tickets $orders $expiration $payments"
 
-echo [$del $client deployment]
-kubectl $del deployment $client-depl
-
-echo [$del $tickets deployment]
-kubectl $del deployment $tickets-depl
-
-echo [$del $orders deployment]
-kubectl $del deployment $orders-depl
-
-echo [$del $expiration deployment]
-kubectl $del deployment $expiration-depl
-
-echo [$del $ER deployment]
-kubectl $del deployment $ER-depl
-
-echo [$del $nats deployment]
-kubectl $del deployment $nats-depl
-
-echo [$del $auth service]
-kubectl $del deployment $auth-mongo-depl
-
-echo [$del $tickets service]
-kubectl $del deployment $tickets-mongo-depl
-
-echo [$del $orders service]
-kubectl $del deployment $orders-mongo-depl
-
-echo [--------Service---------]
-echo [$del $auth service]
-kubectl $del service $auth-srv
-
-echo [$del $tickets service]
-kubectl $del service $tickets-srv
-
-echo [$del $ER service]
-kubectl $del service $ER-srv
-
-echo [$del $orders service]
-kubectl $del service $orders-srv
-
-echo [$del $auth service]
-kubectl $del service $auth-mongo-srv
-
-echo [$del $tickets service]
-kubectl $del service $tickets-mongo-srv
-
-echo [$del $orders service]
-kubectl $del service $orders-mongo-srv
-
-echo [$del $nats service]
-kubectl $del service $nats-srv
-kubectl $del service $nats-srv-02
-kubectl $del service $nats-headless
-
-echo [$del $client service]
-kubectl $del service $client-srv
-
-echo [--------hpa---------]
-echo [$del $auth hpa]
-kubectl $del hpa $auth-hpa
-
-echo [$del $tickets hpa]
-kubectl $del hpa $tickets-hpa
-
-echo [$del $orders hpa]
-kubectl $del hpa $orders-hpa
-
-echo [$del $expiration hpa]
-kubectl $del hpa $expiration-hpa
-
-echo [$del $ER hpa]
-kubectl $del hpa $ER-hpa
-
-echo [$del $nats hpa]
-kubectl $del hpa $nats-hpa
-
-echo [$del $client hpa]
-kubectl $del hpa $client-hpa
-
-echo [$del $auth hpa]
-kubectl $del hpa $auth-mongo-hpa
-
-echo [$del $tickets hpa]
-kubectl $del hpa $tickets-mongo-hpa
-
-echo [$del $orders hpa]
-kubectl $del hpa $orders-mongo-hpa
+# Secrets
+for secret in $secretList; do
+  echo ["Delete secret $secret"]
+  kubectl delete secret $secret-secret
+done
+# Configs
+for config in $configList; do
+  echo ["Delete config $config"]
+  kubectl delete config $config-secret
+done
+# Events
+for event in $eventsList; do
+  echo ["Delete the $event"]
+  kubectl $del deployment $event-depl
+  kubectl $del service $event-srv
+  kubectl $del hpa $event-hpa
+done
+# Services
+for srv in $servicesList; do
+  echo ["Delete the $srv"]
+  kubectl $del deployment $srv-depl
+  kubectl $del service $srv-srv
+  kubectl $del hpa $srv-hpa
+done
+# Database
+for db in $databaseList; do
+  echo ["Delete the $db-mongo"]
+  kubectl $del deployment $db-mongo-depl
+  kubectl $del service $db-mongo-srv
+  kubectl $del hpa $db-hpa
+done
 
 echo [--------Namesoace---------]
-# kubectl delete namespace
+kubectl delete namespace
 echo [--------Ningix---------]
 nginx=ingress-nginx
 echo [$del client deployment]
