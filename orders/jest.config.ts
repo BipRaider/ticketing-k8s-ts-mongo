@@ -6,7 +6,7 @@ const config: Config.InitialOptions = {
   testEnvironment: 'node',
   verbose: true,
   displayName: {
-    name: 'tickets',
+    name: 'orders',
     color: 'yellowBright',
   },
 
