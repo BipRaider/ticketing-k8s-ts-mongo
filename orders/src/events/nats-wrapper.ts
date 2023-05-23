@@ -1,6 +1,11 @@
 import { ErrorEx } from '@bipdev/common';
 import nats, { Stan } from 'node-nats-streaming';
-import { TicketCreatedListenerEvent, TicketUpdatedListenerEvent, ExpirationCompleteListenerEvent } from './listners';
+import {
+  TicketCreatedListenerEvent,
+  TicketUpdatedListenerEvent,
+  ExpirationCompleteListenerEvent,
+  PaymentCreatedListenerEvent,
+} from './listners';
 
 class NatsWrapper {
   private _client?: Stan;
@@ -54,6 +59,7 @@ class NatsWrapper {
     new TicketCreatedListenerEvent(this.client).listen();
     new TicketUpdatedListenerEvent(this.client).listen();
     new ExpirationCompleteListenerEvent(this.client).listen();
+    new PaymentCreatedListenerEvent(this.client).listen();
   };
 }
 

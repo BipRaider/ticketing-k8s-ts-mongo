@@ -5,6 +5,7 @@ import { OrdersStatus } from '@bipdev/contracts';
 
 import { MongoService } from '@src/database';
 import { stripe } from '../libs';
+import { PaymentCreatedPublisher, natsWrapper } from '@src/events';
 // import { OrderCreatePublisher, natsWrapper } from '@src/events';
 
 export const createCharge = async (
@@ -35,7 +36,13 @@ export const createCharge = async (
       stripeId: charges.id,
     });
 
-    res.status(204).send({ data: payment });
+    new PaymentCreatedPublisher(natsWrapper.client).publish({
+      id: payment.id,
+      orderId: payment.orderId,
+      stripeId: payment.stripeId,
+    });
+
+    res.status(201).send({ data: { id: payment.id } });
   } catch (e) {
     next(e);
   }

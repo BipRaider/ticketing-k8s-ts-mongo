@@ -1,11 +1,12 @@
-import { describe, test, expect } from '@jest/globals';
-import { OrdersStatus } from '@bipdev/contracts';
+import { describe, test, expect, jest } from '@jest/globals';
+import { OrdersStatus, PaymentCreatedEvent, Subjects } from '@bipdev/contracts';
 
 import { query, ResErr, routerUrl, createCookie, createMongoId } from '../../test/utils';
 
 import { stripe } from '../../libs';
 import { MongoService } from '../../database';
 import { IPaymentsSchema } from '../../interfaces';
+import { natsWrapper } from '../../events/nats-wrapper';
 
 const orderCreate = { token: 'tok_visa', orderId: createMongoId() };
 
@@ -21,7 +22,9 @@ const db: MongoService = new MongoService();
 
 describe('[Create]:', () => {
   describe('[OK]:', () => {
-    test('[204] create the order successfully:', async () => {
+    let publisherCalls: unknown[];
+    let publisherData: PaymentCreatedEvent['data'];
+    test('[201] create the order successfully and a publisher event is called:', async () => {
       const userId = createMongoId();
       const email = 'test@test.test';
       const { cookie } = await createCookie({ id: userId, email });
@@ -29,12 +32,31 @@ describe('[Create]:', () => {
       await db.orders.addition(orderData);
       const res = await query(routerUrl.create, 'post', orderCreate, '', cookie);
 
-      expect(res.statusCode).toEqual(204);
+      expect(res.statusCode).toEqual(201);
+      expect(natsWrapper.client.publish).toHaveBeenCalled();
+      publisherCalls = (natsWrapper.client.publish as jest.Mock).mock.calls[0];
+      publisherData = JSON.parse(publisherCalls[1] as string);
     });
-    describe('Stripe', () => {
+    describe('[Publisher event]', () => {
+      test('subject should be valid', () => {
+        expect(publisherCalls[0]).toEqual(Subjects.PaymentCreated);
+      });
+      test('orderId should be valid', () => {
+        expect(publisherData.orderId).toBeDefined();
+        expect(publisherData.orderId).toEqual(orderCreate.orderId);
+      });
+      test('payment id should be define', () => {
+        expect(publisherData.id).toBeDefined();
+      });
+      test('stripeId should be define', () => {
+        expect(publisherData.stripeId).toBeDefined();
+      });
+    });
+
+    describe('[Stripe]', () => {
       let charge: any;
       let paymentOrder: IPaymentsSchema;
-      test('stripe should be define and payment should be define:', async () => {
+      test('payment and stripe should be define', async () => {
         const userId = createMongoId();
         const email = 'test@test.test';
         const { cookie } = await createCookie({ id: userId, email });
@@ -65,6 +87,7 @@ describe('[Create]:', () => {
       test('orderId should be valid into the payment', () => {
         expect(paymentOrder.orderId).toEqual(orderCreate.orderId);
       });
+
       // let stripeCalls: any = {};
       // let stripeData: any = {};
       // test('stripe should be called:', async () => {

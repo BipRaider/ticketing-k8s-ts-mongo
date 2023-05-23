@@ -91,7 +91,20 @@ describe('[Expiration complete listener]', () => {
     // write assertions to make sure ask func is called
     expect(msg.ack).not.toHaveBeenCalled();
   });
+  test('dose not call publisher event if the order complete', async () => {
+    const { listener, data, msg, order } = await setup();
+    order.set({ status: OrdersStatus.Complete });
+    await order.save();
 
+    // call the onMessage func with the data object + message object
+    await listener.onMessage(data, msg);
+
+    // write assertions to make sure ask func is called
+    expect(msg.ack).toHaveBeenCalled();
+
+    // the publisher cannot be call an event
+    expect(natsWrapper.client.publish).not.toHaveBeenCalled();
+  });
   describe('[Emit a publisher event]', () => {
     let publisherCalls: unknown[];
     let publisherData: OrderCancelledEvent['data'];
