@@ -2,6 +2,7 @@ import { beforeAll, beforeEach, afterAll, jest } from '@jest/globals';
 import { dbConnect, dbDeleteMany, dbDisconnect } from './utils/mongo';
 
 jest.mock('../events/nats-wrapper');
+// jest.mock('../libs/stripe.ts');
 
 beforeAll(async () => {
   await dbConnect();

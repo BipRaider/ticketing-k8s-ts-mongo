@@ -7,5 +7,7 @@ declare namespace NodeJS {
     readonly NATS_CLUSTER_ID: string;
     readonly NATS_CLIENT_ID: string;
     readonly NATS_URL: string;
+    readonly STRIPE_PUB_KEY: string;
+    readonly STRIPE_KEY: string;
   }
 }

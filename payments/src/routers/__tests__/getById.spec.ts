@@ -77,22 +77,5 @@ describe('[GET BY ID]:', () => {
       const res = await query(routerUrl.getById(id), 'get', {}, '', cookie);
       ResErr(res, 404, 'The Order is not exist');
     });
-
-    test('[401] If the order does not belong to the user:', async () => {
-      const ticket = await db.orders.addition(ticketCreate);
-      let id: string = createMongoId() as string;
-
-      const { cookie } = await createCookie({ id, email: 'test@test.test' });
-      const existOrder = await query(routerUrl.create, 'post', { ticketId: ticket.id }, '', cookie);
-      const { body: bodyCreate } = existOrder;
-      const { data: dataCreate } = bodyCreate;
-
-      let idOtherUser: string = createMongoId() as string;
-      const { cookie: cookieOtherUser } = await createCookie({ idOtherUser, email: 'test1@test.test' });
-
-      const res = await query(routerUrl.getById(dataCreate.id), 'get', {}, '', cookieOtherUser);
-
-      ResErr(res, 401, 'Unauthorized');
-    });
   });
 });

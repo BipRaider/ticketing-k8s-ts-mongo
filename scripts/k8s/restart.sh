@@ -40,3 +40,5 @@ done
 
 echo [Delete all duplicates]
 npm run d:clear
+
+kubectl get all
