@@ -1,2 +1,2 @@
 export * from './orders.model';
-export * from './payment.mode';
+export * from './payment.model';

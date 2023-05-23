@@ -1,7 +1,7 @@
 import mongoose, { Connection } from 'mongoose';
 
-import { IOrdersModel } from '@src/interfaces';
-import { OrdersModel } from '@src/model';
+import { IOrdersModel, IPaymentsModel } from '@src/interfaces';
+import { OrdersModel, PaymentsModel } from '@src/model';
 
 export class MongoService {
   private client: typeof mongoose;
@@ -9,12 +9,13 @@ export class MongoService {
   private url: string;
 
   private _orders: IOrdersModel;
-
+  private _payments: IPaymentsModel;
   constructor() {
     this.client = mongoose;
     this.url = process.env['MONGO_URL'];
 
     this._orders = OrdersModel;
+    this._payments = PaymentsModel;
   }
   /*** Connect to the `mongodb` database */
   async connect(): Promise<void> {
@@ -60,5 +61,9 @@ export class MongoService {
   /** Works with `OrdersModel` from mongodb database */
   get orders(): IOrdersModel {
     return this._orders;
+  }
+  /** Works with `PaymentsModel` from mongodb database */
+  get payments(): IPaymentsModel {
+    return this._payments;
   }
 }

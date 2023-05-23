@@ -1,15 +1,12 @@
-import mongoose, { Schema, model } from 'mongoose';
-import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
+import { Schema, model } from 'mongoose';
 
 import { DB_Module } from '@src/database';
 import { Payment, IPaymentsModel, IPaymentsSchema, IPaymentsDoc } from '@src/interfaces';
 
-mongoose.plugin(updateIfCurrentPlugin);
-
 const PaymentsSchema = new Schema<IPaymentsDoc, IPaymentsModel>(
   {
-    userId: { type: String, required: true },
-    price: { type: Number, required: true, min: 0 },
+    orderId: { type: String, required: true },
+    stripeId: { type: String, required: true },
   },
   {
     timestamps: { createdAt: 'createAt', updatedAt: 'updateAt' },
@@ -22,25 +19,12 @@ const PaymentsSchema = new Schema<IPaymentsDoc, IPaymentsModel>(
   },
 );
 
-PaymentsSchema.set('versionKey', 'version');
-
 PaymentsSchema.statics.addition = async (date: Payment): Promise<IPaymentsSchema> => {
   const item: IPaymentsSchema = new PaymentsModel({
-    _id: date.id,
-    version: date.version,
-    price: date.price,
-    userId: date.userId,
+    orderId: date.orderId,
+    stripeId: date.stripeId,
   });
   return await item.save();
-};
-
-PaymentsSchema.statics.findByVersion = async (data: {
-  id: string;
-  version: number;
-}): Promise<IPaymentsSchema | null> => {
-  const version: number = data.version - 1;
-  const ticket = await PaymentsModel.findOne({ _id: data.id, version });
-  return ticket;
 };
 
 export const PaymentsModel: IPaymentsModel = model<IPaymentsSchema, IPaymentsModel>(

@@ -23,8 +23,8 @@ export type TOrders = Pick<IOrdersDoc, 'price' | 'id' | 'userId' | 'status' | 'v
 export type IOrdersSchema = IOrdersDoc;
 
 export interface IOrdersModel extends Model<IOrdersSchema> {
-  /*** Create the ticket and save it to the database.*/
+  /*** Create the order and save it to the database.*/
   addition: (date: Order) => Promise<IOrdersSchema>;
-  /*** Find of the ticket by id and version to the database.*/
+  /*** Find of the order by id and version to the database.*/
   findByVersion: (data: { id: string; version: number }) => Promise<IOrdersSchema | null>;
 }

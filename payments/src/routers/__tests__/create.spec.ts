@@ -1,10 +1,11 @@
-import { describe, test, expect, jest } from '@jest/globals';
+import { describe, test, expect } from '@jest/globals';
 import { OrdersStatus } from '@bipdev/contracts';
 
-import { query, ResErr, routerUrl, createCookie, createMongoId, StatusIsNot } from '../../test/utils';
+import { query, ResErr, routerUrl, createCookie, createMongoId } from '../../test/utils';
 
 import { stripe } from '../../libs';
 import { MongoService } from '../../database';
+import { IPaymentsSchema } from '../../interfaces';
 
 const orderCreate = { token: 'tok_visa', orderId: createMongoId() };
 
@@ -31,7 +32,9 @@ describe('[Create]:', () => {
       expect(res.statusCode).toEqual(204);
     });
     describe('Stripe', () => {
-      test('stripe should be called:', async () => {
+      let charge: any;
+      let paymentOrder: IPaymentsSchema;
+      test('stripe should be define and payment should be define:', async () => {
         const userId = createMongoId();
         const email = 'test@test.test';
         const { cookie } = await createCookie({ id: userId, email });
@@ -40,14 +43,28 @@ describe('[Create]:', () => {
         await query(routerUrl.create, 'post', orderCreate, '', cookie);
 
         const charges = await stripe.charges.list({ limit: 50 });
-        const charge = charges.data.find(ch => {
+        charge = charges.data.find(ch => {
           return ch.amount === orderData.price * 100;
         });
-
         expect(charge).toBeDefined();
-        expect(charge?.currency).toEqual('usd');
+        paymentOrder = await db.payments.findOne({
+          stripeId: charge!.id,
+          orderId: orderCreate.orderId,
+        });
+
+        expect(paymentOrder).toBeDefined();
+        expect(paymentOrder).not.toBeNull();
       });
 
+      test('charge currency should be correct', () => {
+        expect(charge.currency).toEqual('usd');
+      });
+      test('stripeId should be valid into the payment', () => {
+        expect(paymentOrder.stripeId).toEqual(charge!.id);
+      });
+      test('orderId should be valid into the payment', () => {
+        expect(paymentOrder.orderId).toEqual(orderCreate.orderId);
+      });
       // let stripeCalls: any = {};
       // let stripeData: any = {};
       // test('stripe should be called:', async () => {

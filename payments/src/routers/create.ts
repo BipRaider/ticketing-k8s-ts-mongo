@@ -23,35 +23,19 @@ export const createCharge = async (
     if (userId !== order.userId) throw new ErrorEx('Unauthorized', null, 401);
     if (order.status === OrdersStatus.Cancelled) throw new ErrorEx('Cannot pay for an cancelled order', null, 400);
 
-    await stripe.charges.create({
+    const charges = await stripe.charges.create({
       amount: order.price * 100,
       currency: 'usd',
       source: token,
-      description: 'My First Test Charge (created for API docs at https://www.stripe.com/docs/api)',
+      description: 'payment service',
     });
 
-    // const expiresAt = new Date();
-    // expiresAt.setSeconds(expiresAt.getSeconds() + EXPIRATION_WINDOW_SECOND);
-    // const order = await DB.orders.addition({ status: OrdersStatus.Created, expiresAt, userId, ticket });
+    const payment = await DB.payments.addition({
+      orderId: order.id,
+      stripeId: charges.id,
+    });
 
-    // const data = {
-    //   status: order.status,
-    //   expiresAt: order.expiresAt,
-    //   userId: order.userId,
-    //   ticket: order.ticket,
-    //   id: order.id,
-    // };
-
-    // void new OrderCreatePublisher(natsWrapper.client).publish({
-    //   id: order.id,
-    //   userId: order.userId,
-    //   status: order.status,
-    //   expiresAt: order.expiresAt.toISOString(),
-    //   version: order.version,
-    //   ticket: { id: ticket.id, price: ticket.price },
-    // });
-
-    res.status(204).send({ data: order });
+    res.status(204).send({ data: payment });
   } catch (e) {
     next(e);
   }
