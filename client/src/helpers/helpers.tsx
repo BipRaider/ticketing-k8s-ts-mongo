@@ -68,4 +68,13 @@ export const firstLevelMenu: firstLevelMenu[] = [
     public: false,
     private: true,
   },
+  {
+    href: '/ticket/create',
+    label: 'add ticket',
+    icon: <ProductsIcon />,
+    id: FirstLevelMenu.AddTicket,
+    auth: true,
+    public: false,
+    private: true,
+  },
 ];

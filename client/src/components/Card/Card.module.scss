@@ -1,8 +1,18 @@
 @use '../../styles/styles' as *;
 
 .card {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+
+  width: 260px;
+  padding: 5px;
+
   background: $white;
   border-radius: 15px;
+  outline: 1px solid rgb(0 0 139);
   box-shadow: 0 4px 4px rgb(0 0 0 / 19.9%);
 }
 

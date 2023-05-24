@@ -12,16 +12,25 @@ export class ClientAxios {
   }
 
   init = (): AxiosInstance => {
-    if (this.req !== undefined) {
+    try {
+      window;
+      if (this.req !== undefined) {
+        return axios.create({
+          baseURL: API.urlList.url_k8s,
+          headers: this.req.headers,
+          timeout: 3000,
+        });
+      }
+      return axios.create({
+        baseURL: '/',
+        timeout: 3000,
+      });
+    } catch {
       return axios.create({
         baseURL: API.urlList.url_k8s,
         headers: this.req.headers,
-        timeout: 1000,
+        timeout: 3000,
       });
     }
-    return axios.create({
-      baseURL: '/',
-      timeout: 1000,
-    });
   };
 }

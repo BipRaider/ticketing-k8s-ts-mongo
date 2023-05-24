@@ -1,6 +1,6 @@
 import React from 'react';
 import { Htag } from '../components';
-import { withLayout } from '../layout/Layout';
+import { withPageLayout } from '../layout/Layout';
 
 function Error500(): JSX.Element {
   return (
@@ -10,4 +10,4 @@ function Error500(): JSX.Element {
   );
 }
 
-export default withLayout(Error500);
+export default withPageLayout(Error500);

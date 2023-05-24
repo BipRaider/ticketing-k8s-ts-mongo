@@ -1,6 +1,6 @@
 import React from 'react';
 import { Htag } from '../components';
-import { withLayout } from '../layout/Layout';
+import { withPageLayout } from '../layout/Layout';
 
 export function Error404(): JSX.Element {
   return (
@@ -10,4 +10,4 @@ export function Error404(): JSX.Element {
   );
 }
 
-export default withLayout(Error404);
+export default withPageLayout(Error404);

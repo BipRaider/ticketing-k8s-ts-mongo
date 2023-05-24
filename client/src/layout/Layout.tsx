@@ -10,6 +10,8 @@ import { Header } from './Header';
 import { SideBar } from './SideBar';
 import { Main } from './Main';
 import { Footer } from './Footer';
+import { AxiosInstance } from 'axios';
+import { FnProps } from '@src/interfaces/pageProps.interface';
 
 /*** Main page to view. */
 const Layout: React.FC<LayoutProps> = ({ children }: LayoutProps): JSX.Element => {
@@ -23,8 +25,6 @@ const Layout: React.FC<LayoutProps> = ({ children }: LayoutProps): JSX.Element =
     </div>
   );
 };
-
-type FnProps<T> = (context: NextPageContext) => T | Promise<T>;
 
 /*** Wrapper for all page components.*/
 export const withPageLayout = <T extends Record<string, unknown> & IPageContext>(

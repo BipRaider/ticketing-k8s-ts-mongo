@@ -1,13 +1,19 @@
 import type { AppProps } from 'next/app';
+import React, { FunctionComponent } from 'react';
 import Head from 'next/head';
 
 import '@src/styles/globals.scss';
-
+import { ClientAxios } from '@src/api/build-client';
 import { IPageContext } from '@src/context/page.context';
 import { AppContextProvider } from '@src/context/app.context';
+import { NextPageContext } from 'next/types';
+import { AxiosInstance } from 'axios';
+import { API } from '@src/helpers/api';
+import { FnProps } from '@src/interfaces/pageProps.interface';
 
 const App = ({ Component, pageProps }: AppProps<IPageContext>): JSX.Element => {
   let props: any;
+
   if (pageProps.data) {
     props = pageProps.data;
   }
@@ -27,16 +33,27 @@ const App = ({ Component, pageProps }: AppProps<IPageContext>): JSX.Element => {
   );
 };
 
-// App.getInitialProps = async appCtx => {
-//   try {
-//     let pageProps = {};
-//     if (appCtx.Component.getInitialProps) {
-//       pageProps = await appCtx.Component.getInitialProps(appCtx.ctx);
-//     }
-//     return { pageProps };
-//   } catch (e) {
-//     if (e instanceof Error) return { err: e.message };
-//   }
-// };
+App.getInitialProps = async ({
+  ctx,
+  Component,
+}: {
+  ctx: NextPageContext;
+  Component: FunctionComponent & {
+    getInitialProps: FnProps<Record<string, unknown>>;
+  };
+}): Promise<unknown> => {
+  try {
+    const client = new ClientAxios(ctx).init();
+    let pageProps = {};
+    const { data } = await client.get<{ data: object }>(API.auth.currentuser);
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx, client, data);
+    }
+
+    return { pageProps };
+  } catch (e) {
+    if (e instanceof Error) return { err: e.message };
+  }
+};
 
 export default App;

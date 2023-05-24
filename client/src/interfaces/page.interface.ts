@@ -5,4 +5,7 @@ export enum FirstLevelMenu {
   CurrentUser = 'CurrentUser',
   Home = 'Home',
   App = 'App',
+  AddTicket = 'Add Ticket',
+  Ticket = 'Ticket',
+  Order = 'Order',
 }
