@@ -20,7 +20,7 @@ const config: Config.InitialOptions = {
 
   // coverage
   collectCoverage: true,
-  coverageDirectory: '../coverage',
+  // coverageDirectory: '../coverage',
   collectCoverageFrom: ['**/*.(t|j)s', '!src/test/utils/*.ts', '!src/interfaces/*.ts', '!src/**/__mocks__/**/*'],
 
   // this list paths from tsconfig.json
