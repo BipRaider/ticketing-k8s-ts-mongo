@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development nodemon",
     "test": "jest --config jest.config.ts --no-cache --watchAll",
-    "test:ci": "jest --config jest.config.ts"
+    "test:ci": "jest --config jest.config.ci.ts"
   },
   "dependencies": {
     "@bipdev/common": "^1.0.19",
