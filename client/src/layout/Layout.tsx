@@ -1,7 +1,8 @@
 import React, { FunctionComponent } from 'react';
-import { NextPage, NextPageContext } from 'next';
+import { NextPage } from 'next';
 
 import { PageContextProvider, IPageContext } from '@src/context/page.context';
+import { FnProps } from '@src/interfaces';
 
 import styles from './Layout.module.scss';
 import { LayoutProps } from './Layout.props';
@@ -10,8 +11,6 @@ import { Header } from './Header';
 import { SideBar } from './SideBar';
 import { Main } from './Main';
 import { Footer } from './Footer';
-import { AxiosInstance } from 'axios';
-import { FnProps } from '@src/interfaces/pageProps.interface';
 
 /*** Main page to view. */
 const Layout: React.FC<LayoutProps> = ({ children }: LayoutProps): JSX.Element => {

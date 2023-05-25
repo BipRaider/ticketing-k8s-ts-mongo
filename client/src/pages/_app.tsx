@@ -7,7 +7,6 @@ import { ClientAxios } from '@src/api/build-client';
 import { IPageContext } from '@src/context/page.context';
 import { AppContextProvider } from '@src/context/app.context';
 import { NextPageContext } from 'next/types';
-import { AxiosInstance } from 'axios';
 import { API } from '@src/helpers/api';
 import { FnProps } from '@src/interfaces/pageProps.interface';
 

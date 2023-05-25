@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { withPageLayout } from '@src/layout/Layout';
+
+import { API } from '@src/helpers/api';
+import { withPageLayout } from '@src/layout';
+import { IPageContext } from '@src/context/page.context';
+import { useRequest } from '@src/hooks';
+import { ApiErrorData, FirstLevelMenu, Ticket, Order, FnProps } from '@src/interfaces';
 
 import { Htag } from '@src/components';
-import { useRequest } from '@src/hooks';
-import { IPageContext } from '@src/context/page.context';
-import { ApiErrorData, FirstLevelMenu, Ticket, Order } from '@src/interfaces';
-import { FnProps } from '@src/interfaces/pageProps.interface';
-import { API } from '@src/helpers/api';
+import { Error404 } from '../404';
 
 interface TypeProps extends IPageContext, Record<string, unknown> {
   ticket?: Ticket;
@@ -26,10 +27,13 @@ const TicketShow: React.FC<TypeProps> = ({ ticket }: TypeProps): JSX.Element => 
 
   useEffect(() => {
     if (payload) {
-      void router.push('/order/[orderId]', `/order/${payload?.data.id}`);
+      void router.push('/orders/[orderId]', `/orders/${payload?.data.id}`);
     }
   }, [payload]);
-  console.dir(payload);
+
+  if (!ticket?.id) {
+    return <Error404 />;
+  }
   return (
     <div className="container">
       <Htag tag="h1">{ticket?.title}</Htag>

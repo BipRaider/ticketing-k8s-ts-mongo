@@ -5,7 +5,7 @@ import { MongoService } from '@src/database';
 export const getAll = async (_req: Request<{ id: string }>, res: Response): Promise<void> => {
   const DB = new MongoService().tickets;
 
-  const items = await DB.find().exec();
+  const items = await DB.find({ orderId: undefined }).exec();
 
   res.status(200).send({
     data: items.map(item => {

@@ -8,4 +8,6 @@ export enum FirstLevelMenu {
   AddTicket = 'Add Ticket',
   Ticket = 'Ticket',
   Order = 'Order',
+  Error404 = 'Error 404',
+  Error500 = 'Error 500',
 }

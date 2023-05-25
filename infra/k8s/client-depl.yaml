@@ -15,6 +15,13 @@ spec:
       containers:
         - name: client
           image: bipus/client
+          env:
+            - name: STRIPE_PUB_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: stripe-pub-secret
+                  key: STRIPE_PUB_KEY
+
 ---
 apiVersion: v1
 kind: Service

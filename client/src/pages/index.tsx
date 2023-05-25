@@ -4,10 +4,8 @@ import { NextPage } from 'next';
 
 import { withPageLayout } from '@src/layout/Layout';
 import { IPageContext } from '@src/context/page.context';
-import { FirstLevelMenu, Ticket } from '@src/interfaces';
+import { FirstLevelMenu, Ticket, FnProps } from '@src/interfaces';
 import { API } from '@src/helpers/api';
-
-import { FnProps } from '@src/interfaces/pageProps.interface';
 
 interface HomePageProps extends IPageContext, Record<string, unknown> {
   tickets?: Ticket[];
@@ -20,7 +18,7 @@ const HomePage: NextPage<HomePageProps> = ({ pageName, tickets }): JSX.Element =
         <td>{ticket.title}</td>
         <td>{ticket.price}</td>
         <td>
-          <Link href={`/ticket/[ticketId]`} as={`/ticket/${ticket.id}`} className="btn btn-primary">
+          <Link href={`/tickets/[ticketId]`} as={`/tickets/${ticket.id}`} className="btn btn-primary">
             View
           </Link>
         </td>

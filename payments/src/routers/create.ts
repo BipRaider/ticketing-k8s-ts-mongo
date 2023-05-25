@@ -6,7 +6,6 @@ import { OrdersStatus } from '@bipdev/contracts';
 import { MongoService } from '@src/database';
 import { stripe } from '../libs';
 import { PaymentCreatedPublisher, natsWrapper } from '@src/events';
-// import { OrderCreatePublisher, natsWrapper } from '@src/events';
 
 export const createCharge = async (
   req: Request<unknown, unknown, { orderId: string; token: string }>,
