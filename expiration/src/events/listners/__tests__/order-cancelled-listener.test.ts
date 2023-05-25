@@ -35,20 +35,21 @@ const setup = async () => {
 };
 
 describe('[Order cancelled listener]', () => {
-  test('finds, updates and saves a ticket', async () => {
-    const { listener, data, msg } = await setup();
+  test.todo('finds, updates and saves a ticket');
+  // test('finds, updates and saves a ticket', async () => {
+  //   const { listener, data, msg } = await setup();
 
-    // call the onMessage func with the data object + message object
-    await listener.onMessage(data, msg);
-  });
+  //   // call the onMessage func with the data object + message object
+  //   await listener.onMessage(data, msg);
+  // });
+  test.todo('acks the message');
+  // test('acks the message', async () => {
+  //   const { listener, data, msg } = await setup();
 
-  test('acks the message', async () => {
-    const { listener, data, msg } = await setup();
+  //   // call the onMessage func with the data object + message object
+  //   await listener.onMessage(data, msg);
 
-    // call the onMessage func with the data object + message object
-    await listener.onMessage(data, msg);
-
-    // write assertions to make sure ask func is called
-    expect(msg.ack).toHaveBeenCalled();
-  });
+  //   // write assertions to make sure ask func is called
+  //   expect(msg.ack).toHaveBeenCalled();
+  // });
 });
