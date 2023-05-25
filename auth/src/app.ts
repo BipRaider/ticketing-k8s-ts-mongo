@@ -1,4 +1,4 @@
-import express, { Request } from 'express';
+import express from 'express';
 import { json } from 'body-parser';
 import { errorHandler, errorMiddleware, sessionHandler } from '@bipdev/common';
 // import cookieSession from 'cookie-session';
@@ -14,11 +14,7 @@ import UserRouter from './routers';
 //   maxAge: 24 * 60 * 60 * 1000, // 24 hours
 // };
 const app = express();
-app.use((req: Request, _res, next) => {
-  console.dir(req.path);
 
-  next();
-});
 app.set('trust proxy', true); // traffic is being proximate to our application through ingress nginx.
 
 app.use(json());

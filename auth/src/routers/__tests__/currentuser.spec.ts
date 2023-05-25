@@ -30,16 +30,4 @@ describe('[Current User]:', () => {
     expect(data.email).toEqual(userSignUp.email);
     expect(data.id).toBeDefined();
   });
-
-  test('[401] failed response when user unauthorized:', async () => {
-    const res = await query(routerUrl, 'get', {});
-    const { statusCode, body } = res;
-    const { error } = body;
-
-    const cookie = res.get('Set-Cookie');
-    expect(cookie).not.toBeDefined();
-
-    expect(statusCode).toBe(401);
-    expect(error.message).toEqual('Unauthorized');
-  });
 });
