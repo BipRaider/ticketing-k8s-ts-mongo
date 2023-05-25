@@ -10,7 +10,6 @@ export class OrderCreatedListenerEvent extends Listener<OrderCreatedEvent> {
 
   override async onMessage(data: OrderCreatedEvent['data'], msg: Message): Promise<void> {
     const delay = new Date(data.expiresAt).getTime() - new Date().getTime();
-
     await expirationQueue.add(
       {
         orderId: data.id,
