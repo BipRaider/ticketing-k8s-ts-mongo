@@ -1,4 +1,6 @@
 #!/bin/sh
+echo [-----------config view -----------]
+kubectl config view
 echo [-----------Info about cluster-----------]
 kubectl cluster-info
 echo [-----------Check namespace--------------]
