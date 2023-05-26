@@ -10,13 +10,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: secrets
     steps:
       - uses: actions/checkout@v2
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_USERNAME: ${{ secrets.secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.secrets.DOCKER_PASSWORD }}
       - run: cd auth && docker build -t bipus/auth .
       - run: docker push bipus/auth
       # - uses: digitalocean/action-doctl@v2
