@@ -5,11 +5,15 @@ import { MongoService } from './database';
 
 const start = async () => {
   const SRV = process.env['SRV_NAME'];
+  if (!SRV) throw new ErrorEx('Forbidden', null, 403);
+
   const port = process.env[`${SRV}_SRV_SERVICE_PORT`] || 8000;
   const salt = process.env['JWT_SALT'];
   const dburl = process.env['MONGO_URL'];
 
-  if (!salt && !dburl) throw new ErrorEx('Forbidden', null, 403);
+  if (!salt) throw new ErrorEx('Forbidden', null, 403);
+  if (!dburl) throw new ErrorEx('Forbidden', null, 403);
+
   console.log('Service start...');
 
   await new MongoService().connect();
