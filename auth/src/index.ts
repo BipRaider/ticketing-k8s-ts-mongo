@@ -4,7 +4,7 @@ import { app } from './app';
 import { MongoService } from './database';
 
 const start = async () => {
-  console.dir('Server running..');
+  console.dir('Server running...');
   const SRV = process.env['SRV_NAME'];
   if (!SRV) throw new ErrorEx('Forbidden', null, 403);
 
