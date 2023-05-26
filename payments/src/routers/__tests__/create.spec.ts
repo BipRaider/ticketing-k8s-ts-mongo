@@ -57,25 +57,32 @@ describe('[Create]:', () => {
       let charge: any;
       let paymentOrder: IPaymentsSchema;
       test('payment and stripe should be define', async () => {
-        const userId = createMongoId();
-        const email = 'test@test.test';
-        const { cookie } = await createCookie({ id: userId, email });
-        const orderData = orderAttr(userId);
-        await db.orders.addition(orderData);
-        await query(routerUrl.create, 'post', orderCreate, '', cookie);
+        try {
+          const userId = createMongoId();
+          const email = 'test@test.test';
+          const { cookie } = await createCookie({ id: userId, email });
+          const orderData = orderAttr(userId);
+          await db.orders.addition(orderData);
+          await query(routerUrl.create, 'post', orderCreate, '', cookie);
 
-        const charges = await stripe.charges.list({ limit: 50 });
-        charge = charges.data.find(ch => {
-          return ch.amount === orderData.price * 100;
-        });
-        expect(charge).toBeDefined();
-        paymentOrder = await db.payments.findOne({
-          stripeId: charge!.id,
-          orderId: orderCreate.orderId,
-        });
+          const charges = await stripe.charges.list({ limit: 50 });
 
-        expect(paymentOrder).toBeDefined();
-        expect(paymentOrder).not.toBeNull();
+          charge = charges.data.find(ch => {
+            return ch.amount === orderData.price * 100;
+          });
+
+          expect(charge).toBeDefined();
+
+          paymentOrder = await db.payments.findOne({
+            stripeId: charge!.id,
+            orderId: orderCreate.orderId,
+          });
+
+          expect(paymentOrder).toBeDefined();
+          expect(paymentOrder).not.toBeNull();
+        } catch (error) {
+          expect(error).not.toBeDefined();
+        }
       });
 
       test('charge currency should be correct', () => {
@@ -177,114 +184,3 @@ describe('[Create]:', () => {
     });
   });
 });
-
-//const charge = {
-//     id: 'ch_3NAranAxjIq1CWiV0NUDpXdH',
-//     object: 'charge',
-//     amount: 78400,
-//     amount_captured: 78400,
-//     amount_refunded: 0,
-//     application: null,
-//     application_fee: null,
-//     application_fee_amount: null,
-//     balance_transaction: 'txn_3NAranAxjIq1CWiV0vhPIMuz',
-//     billing_details: {
-//       address: {
-//         city: null,
-//         country: null,
-//         line1: null,
-//         line2: null,
-//         postal_code: null,
-//         state: null
-//       },
-//       email: null,
-//       name: null,
-//       phone: null
-//     },
-//     calculated_statement_descriptor: 'Stripe',
-//     captured: true,
-//     created: 1684834401,
-//     currency: 'usd',
-//     customer: null,
-//     description: 'My First Test Charge (created for API docs at https://www.stripe.com/docs/api)',
-//     destination: null,
-//     dispute: null,
-//     disputed: false,
-//     failure_balance_transaction: null,
-//     failure_code: null,
-//     failure_message: null,
-//     fraud_details: {},
-//     invoice: null,
-//     livemode: false,
-//     metadata: {},
-//     on_behalf_of: null,
-//     order: null,
-//     outcome: {
-//       network_status: 'approved_by_network',
-//       reason: null,
-//       risk_level: 'normal',
-//       risk_score: 45,
-//       seller_message: 'Payment complete.',
-//       type: 'authorized'
-//     },
-//     paid: true,
-//     payment_intent: null,
-//     payment_method: 'card_1NAranAxjIq9CWiVRWC1Tj7D',
-//     payment_method_details: {
-//       card: {
-//         brand: 'visa',
-//         checks: [Object],
-//         country: 'US',
-//         exp_month: 5,
-//         exp_year: 2024,
-//         fingerprint: 'a8fkd51Y93LtyWxa',
-//         funding: 'credit',
-//         installments: null,
-//         last4: '4242',
-//         mandate: null,
-//         network: 'visa',
-//         network_token: [Object],
-//         three_d_secure: null,
-//         wallet: null
-//       },
-//       type: 'card'
-//     },
-//     receipt_email: null,
-//     receipt_number: null,
-//     receipt_url: 'https://pay.stripe.com/receipts/payment/CAcaFwoVYWNjdF8xTkFVNk5BeGpJcTlDV2lWKOKQsqMGMgZwZ78JIgs1LBbvk32ijeAZzILdWPqcpARARQ8jcoeH9Lidw4Y9f7nHPaQhzlS6o6unUOFq',
-//     refunded: false,
-//     review: null,
-//     shipping: null,
-//     source: {
-//       id: 'card_1NAranAxjIq9CWiVRWC8Tj7D',
-//       object: 'card',
-//       address_city: null,
-//       address_country: null,
-//       address_line1: null,
-//       address_line1_check: null,
-//       address_line2: null,
-//       address_state: null,
-//       address_zip: null,
-//       address_zip_check: null,
-//       brand: 'Visa',
-//       country: 'US',
-//       customer: null,
-//       cvc_check: null,
-//       dynamic_last4: null,
-//       exp_month: 5,
-//       exp_year: 2024,
-//       fingerprint: 'a1fkd51Y93LtyWxT',
-//       funding: 'credit',
-//       last4: '4242',
-//       metadata: {},
-//       name: null,
-//       tokenization_method: null,
-//       wallet: null
-//     },
-//     source_transfer: null,
-//     statement_descriptor: null,
-//     statement_descriptor_suffix: null,
-//     status: 'succeeded',
-//     transfer_data: null,
-//     transfer_group: null
-//   }
