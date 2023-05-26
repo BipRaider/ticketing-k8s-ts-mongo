@@ -10,10 +10,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: secrets
     steps:
-      - uses: actions/checkout@v3
-      # - uses: digitalocean/action-doctl@v2
-      #   with:
-      #     token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-      # - run: doctl kubernetes cluster kubeconfig save ticketing
-      # - run: kubectl apply -f infra/k8s && kubectl apply -f infra/k8s-prod
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Connect to doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Switch to other cluster
+        run: doctl kubernetes cluster kubeconfig save ticketing
+
+      - name: Apply
+        run: kubectl apply -f infra/k8s && kubectl apply -f infra/k8s-prod
