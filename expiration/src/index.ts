@@ -2,7 +2,6 @@ import { ErrorEx } from '@bipdev/common';
 import { natsWrapper } from './events';
 
 const start = async () => {
-  console.dir('Service running with actions...');
   const redisHost = process.env['REDIS_HOST'];
   if (!redisHost) throw new ErrorEx('REDIS_HOST must be defined', null, 403);
 
