@@ -44,6 +44,7 @@ const config: Config.InitialOptions = {
   testEnvironmentOptions: {
     url: 'http://localhost/',
     JWT_SALT: 'jwt',
+    NODE_OPTIONS: '--max-old-space-size=8192',
   },
 
   //Ignore files or folder
