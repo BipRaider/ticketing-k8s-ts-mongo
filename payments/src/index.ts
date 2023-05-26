@@ -5,6 +5,7 @@ import { MongoService } from './database';
 import { natsWrapper } from './events';
 
 const start = async () => {
+  console.dir('Service running...');
   const SRV = process.env['SRV_NAME'];
   if (!SRV) throw new ErrorEx('Forbidden', 'SRV_NAME invalid', 403);
 
@@ -24,7 +25,7 @@ const start = async () => {
   await natsWrapper.init(natsClusterID, natsClientID, { url: natsUrl });
 
   app.listen(port, () => {
-    console.log(`Listening on port ${port}!`);
+    console.dir(`Listening on port ${port}!`);
   });
 };
 

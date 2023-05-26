@@ -10,14 +10,22 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: secrets
     steps:
-      - uses: actions/checkout@v2
-      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Docker login
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - run: cd orders && docker build -t bipus/orders .
-      - run: docker push bipus/orders
+
+      - name: Docker build image
+        run: cd orders && docker build -t ${{ secrets.DOCKER_USERNAME }}/orders:latest .
+
+      - name: Docker push image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/orders
       # - uses: digitalocean/action-doctl@v2
       #   with:
       #     token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}

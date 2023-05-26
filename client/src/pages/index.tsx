@@ -37,7 +37,7 @@ const HomePage: NextPage<HomePageProps> = ({ pageName, tickets }): JSX.Element =
 
       {tickets && (
         <div className="container">
-          <h1>Tickets</h1>
+          <h1>Tickets list</h1>
 
           <table className="table">
             <thead>
